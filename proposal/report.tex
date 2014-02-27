@@ -60,7 +60,7 @@ this would be translated into the map/reduce operations of
 \begin{verbatim}
   t1 = map(f, zip(as, bs));
   count = 0;
-  reduce((x) => if (x) count++, t1);
+  reduce((x) => count += x, t1);
   res = count / n;
 \end{verbatim}
 
@@ -83,7 +83,7 @@ scheduler which has a mapping between nodes and data state.
 The second is a compiler transformation. This is mainly done via loop
 fusion. If for example, one writes a program
 \texttt{map(f, map(g, lst))} then a compiler pass can transform this
-into \texttt{map(f g, lst)}. A simple peephole optimizer can scan for
+into \texttt{map(f.g, lst)}. A simple peephole optimizer can scan for
 this instruction pattern and perform this transofmration. A
 generalization of this technique for other list primitives is found in
 the the Haskell vector library. Using a concept called Stream
@@ -121,5 +121,5 @@ statistical computing,'' \emph{R foundation for Statistical Computing},
 2005.
 
 {[}7{]} D. Coutts, R. Leshchinskiy, and D. Stewart, ``Stream fusion:
-From lists to streams to nothing at all,'' \emph{ACM sIGPLAN notices},
+From lists to streams to nothing at all,'' \emph{ACM SIGPLAN notices},
 ACM, 2007, pp. 315--326.

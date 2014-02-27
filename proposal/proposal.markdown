@@ -51,7 +51,7 @@ this would be translated into the map/reduce operations of
 
       t1 = map(f, zip(as, bs));
       count = 0;
-      reduce((x) => if (x) count++, t1);
+      reduce((x) => count += x, t1);
       res = count / n;
 
 We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R[@R] programming language ---
@@ -73,7 +73,7 @@ This done via the Hadoop scheduler which has a mapping between nodes and data
 The second is a compiler transformation.
 This is mainly done via loop fusion.
 If for example, one writes a program `map(f, map(g, lst))` then a compiler pass
-  can transform this into `map(f g, lst)`.
+  can transform this into `map(f.g, lst)`.
 A simple peephole optimizer can scan for this instruction pattern and
   perform this transofmration.
 A generalization of this technique for other list primitives is found in the 
