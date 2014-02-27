@@ -1,4 +1,4 @@
-% Map Reduction on Hetrogenous Systems
+% Map Reduce on Hetrogenous Systems
 % Carl Pearson, Abdul Dakkak, Liwen Chang
 
 With the advent of personal digital devices, big data has become an issue faced
@@ -23,72 +23,67 @@ Multiple components will be examined: good work distribution, efficient use of t
 
 We will then develop a language and library that performs analytics on big data by expressing
   the computation in terms of these `map` and `reduce` instructions.
-We will also examine 
-Our language/library will be inspired by data flow programming languages such as APL and frameworks like LINQ where
+We will also examine what language syntax sugare and compiler passes are needed
+  to produce efficient parallel code.
+
+## Language Details
+
+Our language/library will be inspired by array and data flow programming languages such as Fortran, APL, and LINQ where
   one expresses computation based on operations on vectors and arrays.
-We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R programming language ---
-  this an array of structures type data structure.
+This defines two vectors of size `100`
+
+      n :: Integer = 1000;
+      as :: []Real = rand.Real(n);
+      bs :: []Real = rand.Real(n); 
+
+We can then add the two vectors using an overloaded plus operator
+
+      res :: []Real = as + bs;
+
 To give you a taste of the language, in this program we approximate `pi` using Monte Carlo integration
 
-      def f(a : Real, b : Real) : Bool {
+      def f(a :: Real, b :: Real) :: Bool {
         return a*a + b*b < 1;
       }
-
-      n : Integer = 1000;
-      as : []Real = rand.Real(n);
-      bs : []Real = rand.Real(n);
-      res : Integer = zip(as, bs).count(f) / n;
+      res :: Integer = zip(as, bs).count(f) / n;
 
 this would be translated into the map/reduce operations of 
 
       t1 = map(f, zip(as, bs));
       count = 0;
-      reduce(\x : if (x) count += 1, t1);
+      reduce((x) => if (x) count++, t1);
       res = count / n;
 
+We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R programming language ---
+  this an array of structures type data structure.
 We plan on expressing all commonly used analytics operations such as sort, mean, max, min, histogram, variance, etc...
   in this framework.
 
-<!-- 
-#  import 'io';
-#  import 'stat';
-#  import 'opt';
-#
-#  def f(arg1 : t1, arg2 : t2) : t3 {
-#  	return x;
-#  }
-#
-#  strm : Stream = io.ReadFrame('file.frm', 'r');
-#  zeros : DataFrame = array(0, [10, 10]);
-#  mf : DataFrame = map(f, strm);
-#  zp : DataFrame = zip(strm1, strm2);
-#  ff : DataFrame = filter(f, strm);
-#  lst : DataFrame = compose(map(f), filter(f))(strm);
-#  lst : DataFrame = chain(strm).map(f).filter(f);
-#  red : Real = reduce(f, strm);
-#  mean : Real = stat.Mean(strm);
-#  min : Real = stat.Min(strm);
-#  hist : {Real, Int} = stat.Histogram(strm);
-#  var : Real = stat.Variance(strm);
-#  lr : []Real = stat.LinearRegression(x, y);
-#  sum : Real = stat.Summary(strm);
-#  fit.Linear(strm);
-#  fit.Ransac(strm);
-#  strm[:,0];
-#  transpose(strm);
-#  dot(strm1, strm2);
-#  kmeans(strm);
-#
-#
-#  minv : Real = opt.Minimize(strm);
-#  maxv : Real = opt.Maximize(strm);
-#
-#
-#  - User 
-#  - Msgpack is the marshalling/unmarshaling library
-#  - protobuf
+## Compiler Pass
+
+The most important factor in distributed computing is how to manage
+  memory transfer.
+If a node computes a chunk of data and it is used in subsequent instructions, then it should reuse the output rather than send and request the data again.
+There are two approaches to facilitate this.
+The first is a runtime approach: Hadoop, for example, dispatches
+  tasks to maximize reuse of local data.
+This done via the Hadoop scheduler which has a mapping between nodes and data 
+  state.
+
+The second is a compiler transformation.
+This is mainly done via loop fusion.
+If for example, one writes a program `map(f, map(g, lst))` then a compiler pass
+  can transform this into `map(f g, lst)`.
+A simple peephole optimizer can scan for this instruction pattern and
+  perform this transofmration.
+A generalization of this technique for other list primitives is found in the 
+  the Haskell vector library.
+Using a concept called Stream Fusion, Haskell fuses most function loops to 
+  remove unecessary temporaries and list traversals.
+In this project, we will look at how Haskell performs this transformation and
+  how applicable it is in a non-shared memory model.
 
 
+## Deliverable
 
 
--->
