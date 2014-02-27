@@ -1,6 +1,5 @@
 document:
-	cat proposal.markdown > report.markdown
-	pandoc -o report.tex report.markdown
+	pandoc -S --biblio document.bib --csl ieee.csl proposal.markdown -o report.tex
 	pdflatex document
 	pdflatex document
 	pdflatex document

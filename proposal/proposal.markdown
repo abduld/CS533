@@ -8,8 +8,8 @@ Processing this data using traditional languages is both inefficient and sometim
 By their nature, for many tasks, computing on big data is a highly parallel and scalable 
   and a multitude of solutions have been proposed to make writing programs to process
   big data more manageable.
-One of the most successful, in terms of deployment, is the Map-Reduce programming style
-  (an example is Hadoop) which all companies employ in some way or form.
+One of the most successful, in terms of deployment, is the Map-Reduce[@MapReduce] programming style
+  (an example is Hadoop[@Hadoop]) which all companies employ in some way or form.
 The problem with this programming style is that many programming patterns cannot be easily
   mapped into it.
 
@@ -28,7 +28,7 @@ We will also examine what language syntax sugare and compiler passes are needed
 
 ## Language Details
 
-Our language/library will be inspired by array and data flow programming languages such as Fortran, APL, and LINQ where
+Our language/library will be inspired by array and data flow programming languages such as Fortran[@Fortran], APL[@APL], and LINQ[@LINQ] where
   one expresses computation based on operations on vectors and arrays.
 This defines two vectors of size `100`
 
@@ -54,7 +54,7 @@ this would be translated into the map/reduce operations of
       reduce((x) => if (x) count++, t1);
       res = count / n;
 
-We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R programming language ---
+We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R[@R] programming language ---
   this an array of structures type data structure.
 We plan on expressing all commonly used analytics operations such as sort, mean, max, min, histogram, variance, etc...
   in this framework.
@@ -78,12 +78,15 @@ A simple peephole optimizer can scan for this instruction pattern and
   perform this transofmration.
 A generalization of this technique for other list primitives is found in the 
   the Haskell vector library.
-Using a concept called Stream Fusion, Haskell fuses most function loops to 
-  remove unecessary temporaries and list traversals.
+Using a concept called Stream Fusion[@StreamFusion], Haskell
+  fuses most function loops to remove unecessary
+  temporaries and list traversals.
 In this project, we will look at how Haskell performs this transformation and
   how applicable it is in a non-shared memory model.
 
 
 ## Deliverable
 
+
+## References
 
