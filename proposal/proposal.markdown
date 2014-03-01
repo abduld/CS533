@@ -88,5 +88,7 @@ In this project, we will look at how Haskell performs this transformation and
 ## Deliverable
 
 
+## Schedule
+
 ## References
 
