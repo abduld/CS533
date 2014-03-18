@@ -1,0 +1,66 @@
+\documentclass[]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={CS533 : HW1},
+            pdftitle={Abdul Dakkak},
+            colorlinks=true,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\title{Abdul Dakkak}
+\author{CS533 : HW1}
+\date{}
+
+\begin{document}
+\maketitle
+
+\subsubsection{Question 1}
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  For an application with 10\% sequential code, 30\% 3-way parallel
+  code, and 60\% infinity parallel code the generalized amdahl's law
+  would be:
+\end{itemize}
+
+\begin{align*}
+
+    Speedup_{asymmetric}(f, n, r) &= \frac{1}{\frac{1-f}{perf(r)} + \frac{f}{pref(r) + n - r}} \\
+    Speedup_{asymmetric}(0.9, n, r) &= \frac{1}{\frac{0.1}{pref(r)} + Speedup_{symmetric}(0.9, n-r, r)} \\
+                       &= \frac{1}{\frac{0.1}{pref(r)} + \frac{1}{\frac{0.1 r}{(3 - r) pref(r)}}}
+\end{align*}
+
+\end{document}
