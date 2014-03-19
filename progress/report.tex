@@ -1,11 +1,11 @@
 \subsection{Project Summary}
 
-Our project proposal stated that we will be implementing a compiler for
+Our project proposal stated that we would be implementing a compiler for
 a functional language that would generate MPI code that would run on a
 cluster of machines and across threads in a shared memory system. We
-have narrowed down our objective ot generating code that would run on
-the GPU. The interesting features in the compiler and lanauge, as stated
-in the proposal, is that parallization will be done via Map and Reduce
+have narrowed down our objective to generating code that will run on the
+GPU. The interesting features in the compiler and lanauge, as stated in
+the proposal, is that parallization will be done via Map and Reduce
 operations. The compiler will maintain the IR for these operators and
 will perform optimizations on them to generate performant code.
 
@@ -14,11 +14,12 @@ compiler (the compiler can be very slow), our aim is to have a compiler
 that can generate optimized code. To that end, we have written the
 compiler in Dart (a Javascript inspired language) that currently
 generates sequential Javascript code from our language. The Javascript
-generation is meant primarily for debugging purposes and the next steps
+generation is primarily meant for debugging purposes and the next steps
 would be to generate threaded CUDA code and perform some compiler
 optimizations on the IR. The next few paragraphs revise and summarize
 the project as well as detail what has been implemented and what will be
-implemented. At the end we give a schedule for the project.
+implemented in the future. At the end we give a schedule for the
+project.
 
 \subsection{Language Details}
 
@@ -93,27 +94,30 @@ scheduler which has a mapping between nodes and data state.
 The second is a compiler transformation. This is mainly done via loop
 fusion. If for example, one writes a program
 \texttt{map(f, map(g, lst))} then a compiler pass can transform this
-into \texttt{map(f.g, lst)}. A simple peephole optimizer can scan for
-this instruction pattern and perform this transofmration. A
-generalization of this technique for other list primitives is found in
-the the Haskell vector library. Using a concept called Stream
-Fusion{[}4{]}, Haskell fuses most function loops to remove unecessary
-temporaries and list traversals. In this project, we will adopt some
-aspects of how Haskell performs this transformation when they are
-applicable in a CUDA programming model.
+into \texttt{map(f.g, lst)} where \texttt{f.g} is the composition of
+\texttt{f} and \texttt{g}. A simple peephole optimizer can scan for this
+instruction pattern and perform this transformation. A generalization of
+this technique for other list primitives is found in the the Haskell
+vector library. Using a concept called Stream Fusion{[}4{]}, Haskell
+fuses most function loops to remove unecessary temporaries and list
+traversals. In this project, we will adopt some aspects of how Haskell
+performs this transformation when they are applicable in the CUDA
+programming model --- since GPU programs tend to be memory bound,
+reducing the number of temporaries increases performance, for example.
 
 \subsection{Implementation Details}
 
 To facilitate rapid prototyping in this project, we chose the Dart
-programming language. The Dart language developed by google is a modern
+programming language. The Dart language developed by Google is a modern
 interperetation of Javascript --- a cross between C++/Java and
 Javascript. It adds classes, types, and polymorphic instances (via a
 templating mechanism) and is able to compile down to Javascript or can
 be run in the Dart VM. The language also has good documentation,
-extensive standard library, and an active library development community
-(the parser generator, for example, is a library we are using).
+extensive standard libraries, and an active library development
+community (the parser generator, for example, is a library we are
+using).
 
-The way we structured our compiler, it is backend agnostic. Currently,
+Due to the structure of our compiler, it is backend-agnostic. Currently,
 we generate sequential Javascript for debugging purposes, but have a
 prototype CUDA backend that generates naive code. In the next few weeks,
 we plan on refining our CUDA implementation to hide memory copy latency
@@ -121,32 +125,35 @@ and optimize for the correct launch paramaters for the kernel.
 
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that
 map nicely to our language. We will then measure the performance
-obtained from our compiler versus hand optimized GPU code. We will also
-compare the programming difficulty in both programming interfaces.
+obtained from our compiler versus hand optimized GPU code found in the
+Parboil benchmark suite. We will also compare the ease of programming in
+our language versus native CUDA.
 
 \subsection{Progress Summary}
 
-We have
+We have developed the infrastructure to allow us to start working on the
+interesting parts of the project. During the rest of the semester, we
+will develop compiler passes that allow us to generate efficient backend
+code. Currently, we have the following in our compiler/langauge
+implementation:
 
 \begin{itemize}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  Parser
+  Language Parser
 \item
   Instruction lowerer
 \item
-  Backend to generate CUDA code
+  Naieve backend to generate CUDA code
 \item
   Backend to generate Javascript code (this is used for debugging)
+\item
+  A framework to allow us to perform analysis (a visitor for instruction
+  sequences and blocks, for example)
 \end{itemize}
 
-\subsection{Project Schedule}
-
-We have developed the infrastructure to allow us to start working on the
-interesting parts of the project. In the rest of the semester, we will
-be concentrating on developing compiler passes that would allow us to
-generate efficient backend code. The following table is our projected
-timeline for the rest of the semester.
+The following table is our projected timeline for the rest of the
+semester.
 
 \begin{longtable}[c]{@{}ll@{}}
 \hline\noalign{\medskip}
@@ -155,31 +162,25 @@ Week & Task
 \hline\noalign{\medskip}
 3/17 & Finish naive CUDA code generator.
 \\\noalign{\medskip}
-3/24 & Add compiler pass to perform closure conversion
-\\\noalign{\medskip}
-& (for lambda functions) and calculate the \texttt{def-use}
+3/24 & Add compiler pass to perform closure conversion (for lambda
+functions) and calculate the \texttt{def-use}
 \\\noalign{\medskip}
 & chain of variables.
 \\\noalign{\medskip}
-3/31 & Generate optimized map kernels (this requires
+3/31 & Generate optimized map kernels (this requires finding tuning
+parameters for archtectures and
 \\\noalign{\medskip}
-& finding tuning parameters for archtectures, but
+& NVIDIA provides tools to programatically determine those parameters).
 \\\noalign{\medskip}
-& NVIDIA provides tools to programatically determine
-\\\noalign{\medskip}
-& those parameters).
-\\\noalign{\medskip}
-4/07 & Generate optimized reduce kernels (this, again,
-\\\noalign{\medskip}
-& requires some tuning, but a group member has done
+4/07 & Generate optimized reduce kernels (this, again, requires some
+tuning, but a group member has done
 \\\noalign{\medskip}
 & extensive research on reduce operations on GPUs).
 \\\noalign{\medskip}
 4/14 & Add compiler pass to perform function fusion.
 \\\noalign{\medskip}
-4/21 & Expriment with other compiler passes, such as loop
-\\\noalign{\medskip}
-& unrolling, that would increase the compute work
+4/21 & Expriment with other compiler passes, such as loop unrolling,
+that would increase the compute work
 \\\noalign{\medskip}
 & done by each thread.
 \\\noalign{\medskip}

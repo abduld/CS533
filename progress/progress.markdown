@@ -87,7 +87,7 @@ This done via the Hadoop scheduler which has a mapping between nodes and data
 The second is a compiler transformation.
 This is mainly done via loop fusion.
 If for example, one writes a program `map(f, map(g, lst))` then a compiler pass
-  can transform this into `map(f.g, lst)`. xxx - what is f.g
+  can transform this into `map(f.g, lst)` where `f.g` is the composition of `f` and `g`.
 A simple peephole optimizer can scan for this instruction pattern and
   perform this transformation.
 A generalization of this technique for other list primitives is found in the 
@@ -96,7 +96,7 @@ Using a concept called Stream Fusion[@StreamFusion], Haskell
   fuses most function loops to remove unecessary
   temporaries and list traversals.
 In this project, we will adopt some aspects of how Haskell performs this transformation when they
-  are applicable in the CUDA programming model. xxx - is 'some aspects' specific enough?
+  are applicable in the CUDA programming model --- since GPU programs tend to be memory bound, reducing the number of temporaries increases performance, for example.
 
 ## Implementation Details
 
@@ -120,45 +120,40 @@ In the next few weeks, we plan on refining our CUDA implementation to hide
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that map
     nicely to our language.
 We will then measure the performance obtained from our compiler versus hand
-    optimized GPU code. xxx - what is the source of the hand-optimized GPU code
-We will also compare the programming difficulty in both programming interfaces.
-xxx - how will we compare the programming difficulty
+    optimized GPU code found in the Parboil benchmark suite.
+We will also compare the ease of programming in our language versus native
+    CUDA.
 
 ## Progress Summary
 
-We have 
-
-* Parser
-* Instruction lowerer
-* Backend to generate CUDA code
-* Backend to generate Javascript code (this is used for debugging)
-
-## Project Schedule
 
 We have developed the infrastructure to allow us to start working on the
     interesting parts of the project.
 During the rest of the semester, we will develop
     compiler passes that allow us to generate efficient
     backend code.
+Currently, we have the following in our compiler/langauge implementation:
+
+* Language Parser
+* Instruction lowerer
+* Naieve backend to generate CUDA code
+* Backend to generate Javascript code (this is used for debugging)
+* A framework to allow us to perform analysis (a visitor for instruction sequences and blocks, for example)
+
 The following table is our projected timeline for the rest of the
     semester.
 
-| Week  | Task                                              | 
-|:------|:--------------------------------------------------|
-|  3/17 | Finish naive CUDA code generator.                 |
-|  3/24 | Add compiler pass to perform closure conversion   |
-|       | (for lambda functions) and calculate the `def-use`|
-|       | chain of variables.                               |
-|  3/31 | Generate optimized map kernels (this requires     |
-|       | finding tuning parameters for archtectures, but   |
-|       | NVIDIA provides tools to programatically determine|
-|       | those parameters).                                |
-|  4/07 | Generate optimized reduce kernels (this, again,   |
-|       | requires some tuning, but a group member has done |
+| Week  | Task                                                               | 
+|:------|:-------------------------------------------------------------------|
+|  3/17 | Finish naive CUDA code generator.                                  |
+|  3/24 | Add compiler pass to perform closure conversion  (for lambda functions) and calculate the `def-use`                                       |
+|       |chain of variables.                                                 |
+|  3/31 | Generate optimized map kernels (this requires finding tuning parameters for archtectures and                                             |
+|       | NVIDIA provides tools to programatically determine those parameters).     |
+|  4/07 | Generate optimized reduce kernels (this, again, requires some tuning, but a group member has done |
 |       | extensive research on reduce operations on GPUs). |
 |  4/14 | Add compiler pass to perform function fusion.     |
-|  4/21 | Expriment with other compiler passes, such as loop|
-|       | unrolling, that would increase the compute work   |
+|  4/21 | Expriment with other compiler passes, such as loop unrolling, that would increase the compute work   |
 |       | done by each thread.                              |
 |  4/28 | Final benchmarking and project writeup.           |
 |  5/05 | Complete project presnetation.                    |
