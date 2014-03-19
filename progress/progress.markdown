@@ -3,6 +3,7 @@
 
 ## Project Summary
 
+* State that we are not doing distributed computing anymore.
 
 ## Language Details
 
@@ -36,6 +37,8 @@ We plan on expressing all commonly used analytics operations such as sort, mean,
   in this framework.
 
 
+`TODO: cite nova and copper head`
+
 ## Progress Summary
 
 We have 
@@ -61,6 +64,9 @@ The language also has good documentation, extensive standard library,
 
 
 ## Backend Details
+
+* Javascript
+* CUDA
 
 ## Compiler Pass
 
