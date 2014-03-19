@@ -8,8 +8,8 @@ Our project proposal stated that we would be implementing a compiler for
     on a cluster of machines and across threads in a shared memory system.
 We have narrowed down our objective to generating code that will run
     on the GPU.
-The interesting features in the compiler and lanauge, as stated in
-    the proposal, is that parallization will be done via Map and Reduce
+The interesting features in the compiler and language, as stated in
+    the proposal, is that parallelization will be done via Map and Reduce
     operations.
 The compiler will maintain the IR for these operators and will perform
     optimizations on them to generate performant code.
@@ -67,8 +67,8 @@ The compiler would lower the above into an IR representation, maintaining
 
 The compiler is able to analyze the above code, inline the map operation 
     into the reduce function and privatize the `count` variable.
-This results in efficient code that can be parallized and does not produce
-    unecessary temporary arrays.
+This results in efficient code that can be parallelized and does not produce
+    unnecessary temporary arrays.
 
 We plan on expressing all commonly used analytics operations such as sort, mean, max, min, histogram, variance, etc...
   in this framework.
@@ -93,7 +93,7 @@ A simple peephole optimizer can scan for this instruction pattern and
 A generalization of this technique for other list primitives is found in the 
   the Haskell vector library.
 Using a concept called Stream Fusion[@StreamFusion], Haskell
-  fuses most function loops to remove unecessary
+  fuses most function loops to remove unnecessary
   temporaries and list traversals.
 In this project, we will adopt some aspects of how Haskell performs this transformation when they
   are applicable in the CUDA programming model --- since GPU programs tend to be memory bound, reducing the number of temporaries increases performance, for example.
@@ -102,7 +102,7 @@ In this project, we will adopt some aspects of how Haskell performs this transfo
 
 To facilitate rapid prototyping in this project, we chose the Dart
   programming language.
-The Dart language developed by Google is a modern interperetation of
+The Dart language developed by Google is a modern interpretation of
   Javascript --- a cross between C++/Java and Javascript.
 It adds classes, types, and polymorphic instances (via a templating mechanism)
   and is able to compile down to Javascript or can be run in the Dart VM.
@@ -114,7 +114,7 @@ Due to the structure of our compiler, it is backend-agnostic.
 Currently, we generate sequential Javascript for debugging purposes, but have
     a prototype CUDA backend that generates naive code.
 In the next few weeks, we plan on refining our CUDA implementation to hide 
-    memory copy latency and optimize for the correct launch paramaters for
+    memory copy latency and optimize for the correct launch parameters for
     the kernel.
 
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that map
@@ -132,11 +132,11 @@ We have developed the infrastructure to allow us to start working on the
 During the rest of the semester, we will develop
     compiler passes that allow us to generate efficient
     backend code.
-Currently, we have the following in our compiler/langauge implementation:
+Currently, we have the following in our compiler/language implementation:
 
 * Language Parser
 * Instruction lowerer
-* Naieve backend to generate CUDA code
+* Naive backend to generate CUDA code
 * Backend to generate Javascript code (this is used for debugging)
 * A framework to allow us to perform analysis (a visitor for instruction sequences and blocks, for example)
 
@@ -148,15 +148,15 @@ The following table is our projected timeline for the rest of the
 |  3/17 | Finish naive CUDA code generator.                                  |
 |  3/24 | Add compiler pass to perform closure conversion  (for lambda functions) and calculate the `def-use`                                       |
 |       |chain of variables.                                                 |
-|  3/31 | Generate optimized map kernels (this requires finding tuning parameters for archtectures and                                             |
+|  3/31 | Generate optimized map kernels (this requires finding tuning parameters for architectures and                                              |
 |       | NVIDIA provides tools to programatically determine those parameters).     |
 |  4/07 | Generate optimized reduce kernels (this, again, requires some tuning, but a group member has done |
 |       | extensive research on reduce operations on GPUs). |
 |  4/14 | Add compiler pass to perform function fusion.     |
-|  4/21 | Expriment with other compiler passes, such as loop unrolling, that would increase the compute work   |
+|  4/21 | Experiment with other compiler passes, such as loop unrolling, that would increase the compute work   |
 |       | done by each thread.                              |
 |  4/28 | Final benchmarking and project writeup.           |
-|  5/05 | Complete project presnetation.                    |
+|  5/05 | Complete project presentation.                    |
 
   : Projected timeline for the project along with the associated tasks.
 
