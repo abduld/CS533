@@ -1,5 +1,5 @@
 document:
-	pandoc -S --biblio document.bib --csl ieee.csl proposal.markdown -o report.tex
+	pandoc -S --biblio document.bib --csl ieee.csl progress.markdown -o report.tex
 	pdflatex document
 	pdflatex document
 	pdflatex document

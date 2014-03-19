@@ -1,30 +1,8 @@
 % Map Reduce on Hetrogenous Systems
 % Carl Pearson, Abdul Dakkak, Liwen Chang
 
-With the advent of personal digital devices, big data has become an issue faced
-  not only by large companies but by regular users.
-Processing this data using traditional languages is both inefficient and sometimes
-  not feasible.
-By their nature, for many tasks, computing on big data is a highly parallel and scalable 
-  and a multitude of solutions have been proposed to make writing programs to process
-  big data more manageable.
-One of the most successful, in terms of deployment, is the Map-Reduce[@MapReduce] programming style
-  (an example is Hadoop[@Hadoop]) which all companies employ in some way or form.
-The problem with this programming style is that many programming patterns cannot be easily
-  mapped into it.
+## Project Summary
 
-In this project we will look at what is needed from a compiler and architecture point of 
-  view to make computing with large data both efficient and practical.
-We will do so by having two new instructions in the compiler IR: `map` and `reduce`.
-These will map computation across cluster nodes, CPU cores, and, if time permits, GPU cores efficiently.
-Multiple components will be examined: good work distribution, efficient use of the CPU cache, 
-  a way to hide network traffic latency by interleaving computation and data transfer, and
-  efficient use of the cache.
-
-We will then develop a language and library that performs analytics on big data by expressing
-  the computation in terms of these `map` and `reduce` instructions.
-We will also examine what language syntax sugare and compiler passes are needed
-  to produce efficient parallel code.
 
 ## Language Details
 
@@ -54,10 +32,35 @@ this would be translated into the map/reduce operations of
       reduce((x) => count += x, t1);
       res = count / n;
 
-We will extend our APL/LINQ-like language by borrow the `DataFrame` idea for the R[@R] programming language ---
-  this an array of structures type data structure.
 We plan on expressing all commonly used analytics operations such as sort, mean, max, min, histogram, variance, etc...
   in this framework.
+
+
+## Progress Summary
+
+We have 
+
+* Parser
+* Instruction lowerer
+* Backend to generate CUDA code
+* Backend to generate Javascript code (this is used for debugging)
+
+
+## Implementation Details
+
+To facilitate rapid prototyping in this project, we chose the Dart
+  programming language.
+The Dart language developed by google is a modern interperetation of
+  Javascript --- a cross between C++/Java and Javascript.
+It adds classes, types, and polymorphic instances (via a templating mechanism)
+  and is able to compile down to Javascript or can be run in the Dart VM.
+The language also has good documentation, extensive standard library,
+  and an active library development community
+  (the parser generator, for example, is a library we are using).
+
+
+
+## Backend Details
 
 ## Compiler Pass
 
@@ -84,11 +87,7 @@ Using a concept called Stream Fusion[@StreamFusion], Haskell
 In this project, we will look at how Haskell performs this transformation and
   how applicable it is in a non-shared memory model.
 
-
-## Deliverable
-
-
-## Schedule
+## Revised Schedule
 
 ## References
 
