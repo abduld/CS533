@@ -1,76 +1,86 @@
-With the advent of personal digital devices, big data has become an
-issue faced not only by large companies but by regular users. Processing
-this data using traditional languages is both inefficient and sometimes
-not feasible. By their nature, for many tasks, computing on big data is
-a highly parallel and scalable and a multitude of solutions have been
-proposed to make writing programs to process big data more manageable.
-One of the most successful, in terms of deployment, is the
-Map-Reduce{[}1{]} programming style (an example is Hadoop{[}2{]}) which
-all companies employ in some way or form. The problem with this
-programming style is that many programming patterns cannot be easily
-mapped into it.
+\subsection{Project Summary}
 
-In this project we will look at what is needed from a compiler and
-architecture point of view to make computing with large data both
-efficient and practical. We will do so by having two new instructions in
-the compiler IR: \texttt{map} and \texttt{reduce}. These will map
-computation across cluster nodes, CPU cores, and, if time permits, GPU
-cores efficiently. Multiple components will be examined: good work
-distribution, efficient use of the CPU cache, a way to hide network
-traffic latency by interleaving computation and data transfer, and
-efficient use of the cache.
+Our project proposal stated that we will be implementing a compiler for
+a functional language that would generate MPI code that would run on a
+cluster of machines and across threads in a shared memory system. We
+have narrowed down our objective ot generating code that would run on
+the GPU. The interesting features in the compiler and lanauge, as stated
+in the proposal, is that parallization will be done via Map and Reduce
+operations. The compiler will maintain the IR for these operators and
+will perform optimizations on them to generate performant code.
 
-We will then develop a language and library that performs analytics on
-big data by expressing the computation in terms of these \texttt{map}
-and \texttt{reduce} instructions. We will also examine what language
-syntax sugare and compiler passes are needed to produce efficient
-parallel code.
+It is worth mentioning that our aim is not to write an optimized
+compiler (the compiler can be very slow), our aim is to have a compiler
+that can generate optimized code. To that end, we have written the
+compiler in Dart (a Javascript inspired language) that currently
+generates sequential Javascript code from our language. The Javascript
+generation is meant primarily for debugging purposes and the next steps
+would be to generate threaded CUDA code and perform some compiler
+optimizations on the IR. The next few paragraphs revise and summarize
+the project as well as detail what has been implemented and what will be
+implemented. At the end we give a schedule for the project.
 
-\subsection{Language Details}\label{language-details}
+\subsection{Language Details}
 
-Our language/library will be inspired by array and data flow programming
-languages such as Fortran{[}3{]}, APL{[}4{]}, and LINQ{[}5{]} where one
-expresses computation based on operations on vectors and arrays. This
-defines two vectors of size \texttt{100}
+Our statically typed language is inspired by array and data flow
+programming languages such as Fortran{[}1{]}, APL{[}2{]}, and
+LINQ{[}3{]} where one expresses computation based on operations on
+vectors and arrays. In our language, one can define two vectors of size
+\texttt{100} by
 
 \begin{verbatim}
-  n :: Integer = 1000;
-  as :: []Real = rand.Real(n);
-  bs :: []Real = rand.Real(n); 
+    n :: Integer = 1000;
+    as :: []Real = rand.Real(n);
+    bs :: []Real = rand.Real(n); 
 \end{verbatim}
 
 We can then add the two vectors using an overloaded plus operator
 
 \begin{verbatim}
-  res :: []Real = as + bs;
+    res :: []Real = as + bs;
 \end{verbatim}
 
 To give you a taste of the language, in this program we approximate
 \texttt{pi} using Monte Carlo integration
 
 \begin{verbatim}
-  def f(a :: Real, b :: Real) :: Bool {
+    def f(a :: Real, b :: Real) :: Bool {
     return a*a + b*b < 1;
-  }
-  res :: Integer = zip(as, bs).count(f) / n;
+    }
+    res :: Integer = zip(as, bs).count(f) / n;
 \end{verbatim}
 
 this would be translated into the map/reduce operations of
 
 \begin{verbatim}
-  t1 = map(f, zip(as, bs));
-  count = 0;
-  reduce((x) => count += x, t1);
-  res = count / n;
+    t1 = map(f, zip(as, bs));
+    count = 0;
+    reduce((x) => count += x, t1);
+    res = count / n;
 \end{verbatim}
 
-We will extend our APL/LINQ-like language by borrow the
-\texttt{DataFrame} idea for the R{[}6{]} programming language --- this
-an array of structures type data structure. We plan on expressing all
-commonly used analytics operations such as sort, mean, max, min,
-histogram, variance, etc\ldots{} in this framework.
+The compiler would lower the above into an IR representation,
+maintaining the map/reduce operations
 
-\subsection{Compiler Pass}\label{compiler-pass}
+\begin{verbatim}
+    Instruction(zab, zip(as, bs))
+    Instruction(t1, Map(f, zab))
+    Instruction(count, 0)
+    Function(g, (x) => count += x)
+    Instruction(r2, Reduce(g, t1))
+    Instruction(res, divide(count, n))
+\end{verbatim}
+
+The compiler is able to analyze the above code, inline the map operation
+into the reduce function and privatize the \texttt{count} variable. This
+results in efficient code that can be parallized and does not produce
+unecessary temporary arrays.
+
+We plan on expressing all commonly used analytics operations such as
+sort, mean, max, min, histogram, variance, etc\ldots{} in this
+framework.
+
+\subsection{Compiler Pass}
 
 The most important factor in distributed computing is how to manage
 memory transfer. If a node computes a chunk of data and it is used in
@@ -87,39 +97,115 @@ into \texttt{map(f.g, lst)}. A simple peephole optimizer can scan for
 this instruction pattern and perform this transofmration. A
 generalization of this technique for other list primitives is found in
 the the Haskell vector library. Using a concept called Stream
-Fusion{[}7{]}, Haskell fuses most function loops to remove unecessary
-temporaries and list traversals. In this project, we will look at how
-Haskell performs this transformation and how applicable it is in a
-non-shared memory model.
+Fusion{[}4{]}, Haskell fuses most function loops to remove unecessary
+temporaries and list traversals. In this project, we will adopt some
+aspects of how Haskell performs this transformation when they are
+applicable in a CUDA programming model.
 
-\subsection{Deliverable}\label{deliverable}
+\subsection{Implementation Details}
 
-\subsection{References}\label{references}
+To facilitate rapid prototyping in this project, we chose the Dart
+programming language. The Dart language developed by google is a modern
+interperetation of Javascript --- a cross between C++/Java and
+Javascript. It adds classes, types, and polymorphic instances (via a
+templating mechanism) and is able to compile down to Javascript or can
+be run in the Dart VM. The language also has good documentation,
+extensive standard library, and an active library development community
+(the parser generator, for example, is a library we are using).
 
-{[}1{]} J. Dean and S. Ghemawat, ``MapReduce: Simplified data processing
-on large clusters,'' \emph{Proceedings of the 6th conference on
-symposium on opearting systems design \& implementation - volume 6},
-Berkeley, CA, USA: USENIX Association, 2004, pp. 10--10.
+The way we structured our compiler, it is backend agnostic. Currently,
+we generate sequential Javascript for debugging purposes, but have a
+prototype CUDA backend that generates naive code. In the next few weeks,
+we plan on refining our CUDA implementation to hide memory copy latency
+and optimize for the correct launch paramaters for the kernel.
 
-{[}2{]} P. Zikopoulos, C. Eaton, and others, \emph{Understanding big
-data: Analytics for enterprise class hadoop and streaming data},
-McGraw-Hill Osborne Media, 2011.
+We will use parboil as our benchmark suite, picking 4-5 benchmarks that
+map nicely to our language. We will then measure the performance
+obtained from our compiler versus hand optimized GPU code. We will also
+compare the programming difficulty in both programming interfaces.
 
-{[}3{]} J.C. Adams, W.S. Brainerd, and C.H. Coldberg, \emph{Programmer's
-guide to fortran 90}, Intertext Publications, 1990.
+\subsection{Progress Summary}
 
-{[}4{]} R.P. Polivka and S. Pakin, \emph{APL: The language and its
+We have
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Parser
+\item
+  Instruction lowerer
+\item
+  Backend to generate CUDA code
+\item
+  Backend to generate Javascript code (this is used for debugging)
+\end{itemize}
+
+\subsection{Project Schedule}
+
+We have developed the infrastructure to allow us to start working on the
+interesting parts of the project. In the rest of the semester, we will
+be concentrating on developing compiler passes that would allow us to
+generate efficient backend code. The following table is our projected
+timeline for the rest of the semester.
+
+\begin{longtable}[c]{@{}ll@{}}
+\hline\noalign{\medskip}
+Week & Task
+\\\noalign{\medskip}
+\hline\noalign{\medskip}
+3/17 & Finish naive CUDA code generator.
+\\\noalign{\medskip}
+3/24 & Add compiler pass to perform closure conversion
+\\\noalign{\medskip}
+& (for lambda functions) and calculate the \texttt{def-use}
+\\\noalign{\medskip}
+& chain of variables.
+\\\noalign{\medskip}
+3/31 & Generate optimized map kernels (this requires
+\\\noalign{\medskip}
+& finding tuning parameters for archtectures, but
+\\\noalign{\medskip}
+& NVIDIA provides tools to programatically determine
+\\\noalign{\medskip}
+& those parameters).
+\\\noalign{\medskip}
+4/07 & Generate optimized reduce kernels (this, again,
+\\\noalign{\medskip}
+& requires some tuning, but a group member has done
+\\\noalign{\medskip}
+& extensive research on reduce operations on GPUs).
+\\\noalign{\medskip}
+4/14 & Add compiler pass to perform function fusion.
+\\\noalign{\medskip}
+4/21 & Expriment with other compiler passes, such as loop
+\\\noalign{\medskip}
+& unrolling, that would increase the compute work
+\\\noalign{\medskip}
+& done by each thread.
+\\\noalign{\medskip}
+4/28 & Final benchmarking and project writeup.
+\\\noalign{\medskip}
+5/05 & Complete project presnetation.
+\\\noalign{\medskip}
+\hline
+\noalign{\medskip}
+\caption{Projected timeline for the project along with the associated
+tasks.}
+\end{longtable}
+
+\subsection{References}
+
+{[}1{]} J.C. Adams, W.S. Brainerd, and C.H. Coldberg, \emph{Programmer's
+guide to Fortran 90}, Intertext Publications, 1990.
+
+{[}2{]} R.P. Polivka and S. Pakin, \emph{APL: The language and its
 usage}, Prentice Hall Professional Technical Reference, 1975.
 
-{[}5{]} E. Meijer, B. Beckman, and G. Bierman, ``Linq: reconciling
+{[}3{]} E. Meijer, B. Beckman, and G. Bierman, ``Linq: reconciling
 object, relations and xml in the. net framework,'' \emph{Proceedings of
-the 2006 aCM sIGMOD international conference on management of data},
+the 2006 ACM SIGMOD international conference on Management of data},
 ACM, 2006, pp. 706--706.
 
-{[}6{]} R.C. Team and others, ``R: A language and environment for
-statistical computing,'' \emph{R foundation for Statistical Computing},
-2005.
-
-{[}7{]} D. Coutts, R. Leshchinskiy, and D. Stewart, ``Stream fusion:
-From lists to streams to nothing at all,'' \emph{ACM SIGPLAN notices},
+{[}4{]} D. Coutts, R. Leshchinskiy, and D. Stewart, ``Stream fusion:
+From lists to streams to nothing at all,'' \emph{ACM SIGPLAN Notices},
 ACM, 2007, pp. 315--326.
