@@ -3,10 +3,10 @@
 
 ## Project Summary
 
-Our project proposal stated that we will be implementing a compiler for 
+Our project proposal stated that we would be implementing a compiler for 
     a functional language that would generate MPI code that would run
     on a cluster of machines and across threads in a shared memory system.
-We have narrowed down our objective ot generating code that would run
+We have narrowed down our objective to generating code that will run
     on the GPU.
 The interesting features in the compiler and lanauge, as stated in
     the proposal, is that parallization will be done via Map and Reduce
@@ -20,11 +20,11 @@ It is worth mentioning that our aim is not to write an optimized compiler (the c
 To that end, we have written the compiler in
     Dart (a Javascript inspired language) that currently generates sequential
     Javascript code from our language.
-The Javascript generation is meant primarily for debugging purposes
+The Javascript generation is primarily meant for debugging purposes
     and the next steps would be to generate threaded CUDA code and
     perform some compiler optimizations on the IR.
 The next few paragraphs revise and summarize the project as well
-    as detail what has been implemented and what will be implemented.
+    as detail what has been implemented and what will be implemented in the future.
 At the end we give a schedule for the project.
 
 ## Language Details
@@ -87,30 +87,30 @@ This done via the Hadoop scheduler which has a mapping between nodes and data
 The second is a compiler transformation.
 This is mainly done via loop fusion.
 If for example, one writes a program `map(f, map(g, lst))` then a compiler pass
-  can transform this into `map(f.g, lst)`.
+  can transform this into `map(f.g, lst)`. xxx - what is f.g
 A simple peephole optimizer can scan for this instruction pattern and
-  perform this transofmration.
+  perform this transformation.
 A generalization of this technique for other list primitives is found in the 
   the Haskell vector library.
 Using a concept called Stream Fusion[@StreamFusion], Haskell
   fuses most function loops to remove unecessary
   temporaries and list traversals.
 In this project, we will adopt some aspects of how Haskell performs this transformation when they
-  are applicable in a CUDA programming model.
+  are applicable in the CUDA programming model. xxx - is 'some aspects' specific enough?
 
 ## Implementation Details
 
 To facilitate rapid prototyping in this project, we chose the Dart
   programming language.
-The Dart language developed by google is a modern interperetation of
+The Dart language developed by Google is a modern interperetation of
   Javascript --- a cross between C++/Java and Javascript.
 It adds classes, types, and polymorphic instances (via a templating mechanism)
   and is able to compile down to Javascript or can be run in the Dart VM.
-The language also has good documentation, extensive standard library,
+The language also has good documentation, extensive standard libraries,
   and an active library development community
   (the parser generator, for example, is a library we are using).
 
-The way we structured our compiler, it is backend agnostic.
+Due to the structure of our compiler, it is backend-agnostic.
 Currently, we generate sequential Javascript for debugging purposes, but have
     a prototype CUDA backend that generates naive code.
 In the next few weeks, we plan on refining our CUDA implementation to hide 
@@ -120,8 +120,9 @@ In the next few weeks, we plan on refining our CUDA implementation to hide
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that map
     nicely to our language.
 We will then measure the performance obtained from our compiler versus hand
-    optimized GPU code.
+    optimized GPU code. xxx - what is the source of the hand-optimized GPU code
 We will also compare the programming difficulty in both programming interfaces.
+xxx - how will we compare the programming difficulty
 
 ## Progress Summary
 
@@ -136,8 +137,8 @@ We have
 
 We have developed the infrastructure to allow us to start working on the
     interesting parts of the project.
-In the rest of the semester, we will be concentrating on developing
-    compiler passes that would allow us to generate efficient
+During the rest of the semester, we will develop
+    compiler passes that allow us to generate efficient
     backend code.
 The following table is our projected timeline for the rest of the
     semester.
