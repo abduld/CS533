@@ -75,7 +75,12 @@ We plan on expressing all commonly used analytics operations such as sort, mean,
 
 ## Compiler Pass
 
-The most important factor in distributed computing is how to manage
+In this section we discuss some of the compiler transformations we will be examining.
+These optimizations have not been implemented.
+
+### Loop Fusion
+
+The most important factor in parallel computing is how to manage
   memory transfer.
 If a node computes a chunk of data and it is used in subsequent instructions, then it should reuse the output rather than send and request the data again.
 There are two approaches to facilitate this.
@@ -98,6 +103,26 @@ Using a concept called Stream Fusion[@StreamFusion], Haskell
 In this project, we will adopt some aspects of how Haskell performs this transformation when they
   are applicable in the CUDA programming model --- since GPU programs tend to be memory bound, reducing the number of temporaries increases performance, for example.
 
+In order to achieve high-performance fusion, a resource estimator and a memory counter are necessary.  The resource estimator monitor on-chip resource usage for a current tiling to avoid register spilling and drop of multithreading. The memory counter simple calculate the potential memory count saved for fusion.  Since 1) on-chip resource of GPU is limited, and 2) the performance gap between on-chip access and off-chip access on GPU might has less impact than the gap between on-node access and inter-node access on cluster, the decision of fusion may not be trivial. Here, we will heuristic function of these two parameter to determine the decision of fusion.  A precise resource estimator might be very difficult to implement and may not really meet the real vendor compiler. In this project, we will simply build a routine to rely on the feedback of the real vendor compiler after the GPU backend generated the code. 
+
+### Loop Tiling
+
+Tiling is critical for performant on GPU programs.
+In this project, automatic tiling will be considered as group several single function `f`.
+Considering function `f` is isolated and map limit data dependency among different output, an analysis can be done for function `f` to track data sharing among multiple outputs.
+Here, sharing analysis is considered as access pattern analysis of function `f`. Therefore, tiling for data sharing is achievable.
+
+ 
+Coalesced access of GPU is also important for performance. In this project, coalesced access is easily considered as a specialized type tiling. Register packing and thread coarsening of GPU are also recognized by applying the same analysis, with different tiling. Therefore, we can potentially perform very aggressive tiling for GPU. 
+
+### Autotuning
+
+One of the advantages of compiling from a high level languges into CUDA is that you can easily tweak parameters for loop tiling, unrolling, and fusion.
+A combination of a resource model and autotuning will be used to maximize
+  the performance of the generated code.
+We will use a bruteforce like algorithm, similar to the one employed by ATLAS
+  to explore the parameter space.
+
 ## Implementation Details
 
 To facilitate rapid prototyping in this project, we chose the Dart
@@ -116,6 +141,13 @@ Currently, we generate sequential Javascript for debugging purposes, but have
 In the next few weeks, we plan on refining our CUDA implementation to hide 
     memory copy latency and optimize for the correct launch parameters for
     the kernel.
+
+## Hardware
+
+Our generated code will be tested against NVIDIA Fermi C2050 and Kepler K10 GPU
+  architectures both of which we have access to.
+
+## Evaluation
 
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that map
     nicely to our language.
@@ -146,15 +178,16 @@ The following table is our projected timeline for the rest of the
 | Week  | Task                                                               | 
 |:------|:-------------------------------------------------------------------|
 |  3/17 | Finish naive CUDA code generator.                                  |
-|  3/24 | Add compiler pass to perform closure conversion  (for lambda functions) and calculate the `def-use`                                       |
-|       |chain of variables.                                                 |
-|  3/31 | Generate optimized map kernels (this requires finding tuning parameters for architectures and                                              |
-|       | NVIDIA provides tools to programatically determine those parameters).     |
-|  4/07 | Generate optimized reduce kernels (this, again, requires some tuning, but a group member has done |
-|       | extensive research on reduce operations on GPUs). |
+|  3/24 | Add compiler pass to perform closure conversion  (for lambda functions) and                                         |
+|       | calculate the `def-use` chain of variables.                                                 |
+|  3/31 | Generate optimized map kernels (this requires finding tuning parameters for                                              |
+|       | architectures and NVIDIA provides tools to programatically      |
+|       | determine those parameters).     |
+|  4/07 | Generate optimized reduce kernels (this, again, requires some tuning, but a  |
+|       | group member has done extensive research on reduce operations on GPUs). |
 |  4/14 | Add compiler pass to perform function fusion.     |
-|  4/21 | Experiment with other compiler passes, such as loop unrolling, that would increase the compute work   |
-|       | done by each thread.                              |
+|  4/21 | Experiment with other compiler passes, such as loop unrolling, that    |
+|       | would increase the compute work done by each thread.                              |
 |  4/28 | Final benchmarking and project writeup.           |
 |  5/05 | Complete project presentation.                    |
 

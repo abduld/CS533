@@ -1,4 +1,4 @@
-\subsection{Project Summary}
+\subsection{Project Summary}\label{project-summary}
 
 Our project proposal stated that we would be implementing a compiler for
 a functional language that would generate MPI code that would run on a
@@ -21,7 +21,7 @@ the project as well as detail what has been implemented and what will be
 implemented in the future. At the end we give a schedule for the
 project.
 
-\subsection{Language Details}
+\subsection{Language Details}\label{language-details}
 
 Our statically typed language is inspired by array and data flow
 programming languages such as Fortran{[}1{]}, APL{[}2{]}, and
@@ -81,10 +81,15 @@ We plan on expressing all commonly used analytics operations such as
 sort, mean, max, min, histogram, variance, etc\ldots{} in this
 framework.
 
-\subsection{Compiler Pass}
+\subsection{Compiler Pass}\label{compiler-pass}
 
-The most important factor in distributed computing is how to manage
-memory transfer. If a node computes a chunk of data and it is used in
+In this section we discuss some of the compiler transformations we will
+be examining. These optimizations have not been implemented.
+
+\subsubsection{Loop Fusion}\label{loop-fusion}
+
+The most important factor in parallel computing is how to manage memory
+transfer. If a node computes a chunk of data and it is used in
 subsequent instructions, then it should reuse the output rather than
 send and request the data again. There are two approaches to facilitate
 this. The first is a runtime approach: Hadoop, for example, dispatches
@@ -105,7 +110,47 @@ performs this transformation when they are applicable in the CUDA
 programming model --- since GPU programs tend to be memory bound,
 reducing the number of temporaries increases performance, for example.
 
-\subsection{Implementation Details}
+In order to achieve high-performance fusion, a resource estimator and a
+memory counter are necessary. The resource estimator monitor on-chip
+resource usage for a current tiling to avoid register spilling and drop
+of multithreading. The memory counter simple calculate the potential
+memory count saved for fusion. Since 1) on-chip resource of GPU is
+limited, and 2) the performance gap between on-chip access and off-chip
+access on GPU might has less impact than the gap between on-node access
+and inter-node access on cluster, the decision of fusion may not be
+trivial. Here, we will heuristic function of these two parameter to
+determine the decision of fusion. A precise resource estimator might be
+very difficult to implement and may not really meet the real vendor
+compiler. In this project, we will simply build a routine to rely on the
+feedback of the real vendor compiler after the GPU backend generated the
+code.
+
+\subsubsection{Loop Tiling}\label{loop-tiling}
+
+Tiling is critical for performant on GPU programs. In this project,
+automatic tiling will be considered as group several single function
+\texttt{f}. Considering function \texttt{f} is isolated and map limit
+data dependency among different output, an analysis can be done for
+function \texttt{f} to track data sharing among multiple outputs. Here,
+sharing analysis is considered as access pattern analysis of function
+\texttt{f}. Therefore, tiling for data sharing is achievable.
+
+Coalesced access of GPU is also important for performance. In this
+project, coalesced access is easily considered as a specialized type
+tiling. Register packing and thread coarsening of GPU are also
+recognized by applying the same analysis, with different tiling.
+Therefore, we can potentially perform very aggressive tiling for GPU.
+
+\subsubsection{Autotuning}\label{autotuning}
+
+One of the advantages of compiling from a high level languges into CUDA
+is that you can easily tweak parameters for loop tiling, unrolling, and
+fusion. A combination of a resource model and autotuning will be used to
+maximize the performance of the generated code. We will use a bruteforce
+like algorithm, similar to the one employed by ATLAS to explore the
+parameter space.
+
+\subsection{Implementation Details}\label{implementation-details}
 
 To facilitate rapid prototyping in this project, we chose the Dart
 programming language. The Dart language developed by Google is a modern
@@ -123,13 +168,20 @@ prototype CUDA backend that generates naive code. In the next few weeks,
 we plan on refining our CUDA implementation to hide memory copy latency
 and optimize for the correct launch parameters for the kernel.
 
+\subsection{Hardware}\label{hardware}
+
+Our generated code will be tested against NVIDIA Fermi C2050 and Kepler
+K10 GPU architectures both of which we have access to.
+
+\subsection{Evaluation}\label{evaluation}
+
 We will use parboil as our benchmark suite, picking 4-5 benchmarks that
 map nicely to our language. We will then measure the performance
 obtained from our compiler versus hand optimized GPU code found in the
 Parboil benchmark suite. We will also compare the ease of programming in
 our language versus native CUDA.
 
-\subsection{Progress Summary}
+\subsection{Progress Summary}\label{progress-summary}
 
 We have developed the infrastructure to allow us to start working on the
 interesting parts of the project. During the rest of the semester, we
@@ -163,26 +215,29 @@ Week & Task
 3/17 & Finish naive CUDA code generator.
 \\\noalign{\medskip}
 3/24 & Add compiler pass to perform closure conversion (for lambda
-functions) and calculate the \texttt{def-use}
+functions) and
 \\\noalign{\medskip}
-& chain of variables.
+& calculate the \texttt{def-use} chain of variables.
 \\\noalign{\medskip}
 3/31 & Generate optimized map kernels (this requires finding tuning
-parameters for architectures and
+parameters for
 \\\noalign{\medskip}
-& NVIDIA provides tools to programatically determine those parameters).
+& architectures and NVIDIA provides tools to programatically
+\\\noalign{\medskip}
+& determine those parameters).
 \\\noalign{\medskip}
 4/07 & Generate optimized reduce kernels (this, again, requires some
-tuning, but a group member has done
+tuning, but a
 \\\noalign{\medskip}
-& extensive research on reduce operations on GPUs).
+& group member has done extensive research on reduce operations on
+GPUs).
 \\\noalign{\medskip}
 4/14 & Add compiler pass to perform function fusion.
 \\\noalign{\medskip}
 4/21 & Experiment with other compiler passes, such as loop unrolling,
-that would increase the compute work
+that
 \\\noalign{\medskip}
-& done by each thread.
+& would increase the compute work done by each thread.
 \\\noalign{\medskip}
 4/28 & Final benchmarking and project writeup.
 \\\noalign{\medskip}
@@ -194,19 +249,19 @@ that would increase the compute work
 tasks.}
 \end{longtable}
 
-\subsection{References}
+\subsection{References}\label{references}
 
 {[}1{]} J.C. Adams, W.S. Brainerd, and C.H. Coldberg, \emph{Programmer's
-guide to Fortran 90}, Intertext Publications, 1990.
+guide to fortran 90}, Intertext Publications, 1990.
 
-{[}2{]} R.P. Polivka and S. Pakin, \emph{APL: The language and its
+{[}2{]} R.P. Polivka and S. Pakin, \emph{APL: the language and its
 usage}, Prentice Hall Professional Technical Reference, 1975.
 
 {[}3{]} E. Meijer, B. Beckman, and G. Bierman, ``Linq: reconciling
 object, relations and xml in the. net framework,'' \emph{Proceedings of
-the 2006 ACM SIGMOD international conference on Management of data},
+the 2006 aCM sIGMOD international conference on management of data},
 ACM, 2006, pp. 706--706.
 
 {[}4{]} D. Coutts, R. Leshchinskiy, and D. Stewart, ``Stream fusion:
-From lists to streams to nothing at all,'' \emph{ACM SIGPLAN Notices},
+from lists to streams to nothing at all,'' \emph{ACM sIGPLAN notices},
 ACM, 2007, pp. 315--326.
