@@ -1,8 +1,4 @@
 
-SOURCES=paper.tex \
-	intro.tex overview.tex related.tex method.tex \
-	schedule.tex conclusion.tex
-	
 
 FIGURES=
 TARGET=paper
