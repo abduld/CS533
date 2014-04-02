@@ -1,0 +1,238 @@
+%-----------------------------------------------------------------------------
+%
+%               Template for sigplanconf LaTeX Class
+%
+% Name:         sigplanconf-template.tex
+%
+% Purpose:      A template for sigplanconf.cls, which is a LaTeX 2e class
+%               file for SIGPLAN conference proceedings.
+%
+% Guide:        Refer to "Author's Guide to the ACM SIGPLAN Class,"
+%               sigplanconf-guide.pdf
+%
+% Author:       Paul C. Anagnostopoulos
+%               Windfall Software
+%               978 371-2316
+%               paul@windfall.com
+%
+% Created:      15 February 2005
+%
+%-----------------------------------------------------------------------------
+
+
+\documentclass[nocopyrightspace]{sigplanconf}
+
+% The following \documentclass options may be useful:
+%
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% authoryear    To obtain author/year citation style instead of numeric.
+
+\usepackage{natbib}
+\usepackage{url}
+\usepackage[squaren,thinqspace,binary]{SIunits}
+
+\let\fourth\relax               % Undefine a macro
+\let\second\relax               % Undefine a macro
+\let\degree\relax               % Undefine a macro
+\let\cdot\relax                 % Undefine a macro
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\usepackage{mathabx}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{bussproofs}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+
+\hyphenation{mono-morph-izing}
+\hyphenation{mono-morph-ize}
+\hyphenation{mono-morph-ic}
+\hyphenation{poly-morph-ic}
+\hyphenation{geo-mean}
+
+%------------------------------------------------------------------------------
+% Global macro definitions
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\proportional}{\mathbin{\propto}}
+\newcommand{\inst}{\mathrel{\succeq}}
+\newcommand{\defeq}{\mathrel{:=}}
+\newcommand{\defeqcont}{\mathrel{\hphantom{\defeq}\mathllap{\mid}}}
+\newcommand{\overlineX}[1]{\overline{\vphantom{\beta}#1}}
+\newcommand{\overlinet}[1]{\overline{\vphantom{t}#1}}
+\newcommand{\conexprX}[3]{#1\app\overlineX{#2}\app\overlineX{#3}}
+\newcommand{\conexpr}[3]{#1\app\overline{#2}\app\overline{#3}}
+\newcommand{\dataexpr}[4]{#1\app\overline{#2}\app\overline{#3}\app\overline{#4}}
+\newcommand{\subst}[2]{[#2/#1]}
+\newcommand{\substo}[2]{[\overline{#2/#1}]}
+
+\newcommand{\ztype}[1]{\ensuremath{#1_{\text{type}}}}
+\newcommand{\name}[1]{\ensuremath{\mathsf{#1}}} % Object functions
+\newcommand{\meta}[1]{\ensuremath{\mathrm{#1}}} % Meta-functions
+\newcommand{\bmk}[1]{\texttt{#1}}
+\newcommand{\app}{\;}
+
+\def\T{\mathbin{::}}
+
+\newcommand{\qforall}[1]{\forall#1.\nolinebreak[1]\:}
+\newcommand{\qexists}[1]{\exists#1.\nolinebreak[1]\:}
+\newcommand{\qlambda}[1]{\lambda#1 \to}
+\newcommand{\qLambda}[1]{\Lambda#1 \to}
+\newcommand{\qforallT}[2]{\qforall{#1\T#2}}
+\newcommand{\qexistsT}[2]{\qexists{#1\T#2}}
+\newcommand{\qlambdaT}[2]{\qlambda{#1\T#2}}
+\newcommand{\qLambdaT}[2]{\qLambda{#1\T#2}}
+
+\newcommand{\letE}[1]{\text{\bf let}\;#1\;\text{\bf in}\;}
+\newcommand{\letrecE}[1]{\text{\bf letrec}\;#1\;\text{\bf in}\;}
+\newcommand{\letfE}[1]{\text{\bf letfun}\;#1\;\text{\bf in}\;}
+\newcommand{\caseE}[1]{\text{\bf case}\;#1\nolinebreak[1]\;\text{\bf of}\;}
+\newcommand{\dataE}[1]{\text{\bf data}\nolinebreak[1]\;#1\nolinebreak[0]\;\text{\bf where}\;}
+\newcommand{\classE}[1]{\text{\bf class}\nolinebreak[1]\;#1\nolinebreak[0]\;\text{\bf where}\;}
+\newcommand{\ifE}[3]{\ifO#1\;\thenO#2\;\elseO#3}
+\newcommand{\externO}{\text{\bf extern}\;}
+\newcommand{\caseO}{\text{\bf case}\;}
+\newcommand{\dataO}{\text{\bf data}\;}
+\newcommand{\classO}{\text{\bf class}\;}
+\newcommand{\ifO}{\text{\bf if}\;}
+\newcommand{\thenO}{\text{\bf then}\;}
+\newcommand{\elseO}{\text{\bf else}\;}
+\newcommand{\whereO}{\text{\bf where}\;}
+\newcommand{\ofO}{\text{\bf of}\;}
+\newcommand{\letO}{\text{\bf let}\;}
+\newcommand{\letrecO}{\text{\bf letrec}\;}
+\newcommand{\inO}{\text{\bf in}\;}
+\newcommand{\typeO}{\text{\bf type}\;}
+
+\def\kindstar{\ensuremath{\mathord{\star}}}
+\def\kindZ{\ensuremath{\mathbb{Z}}}
+\def\kindbox{\name{box}}
+\def\kindbare{\name{bare}}
+\def\kindval{\name{val}}
+\def\kindout{\name{mut}}
+\def\kindinit{\name{init}}
+
+
+\def\typeOut{\name{Mut}}
+\def\typeStore{\name{Store}}
+\def\typeInit{\name{Init}}
+\def\typeStored{\name{Stored}}
+\def\typeBoxed{\name{Boxed}}
+\def\typeAsBox{\name{AsBox}}
+\def\typeAsBare{\name{AsBare}}
+\def\typeArr{\name{Arr}}
+\def\typeRef{\name{Ref}}
+\def\typeRep{\name{Rep}}
+\def\typeTuple{\name{Tuple}}
+\def\typeTupleV{\name{TupleV}}
+\def\typeList{\name{List}}
+\def\typeInt{\name{Int}}
+\def\typeFloat{\name{Float}}
+\def\typeBool{\mathbf{2}}
+\def\typeMaybe{\name{Maybe}}
+\def\typeScatter{\name{Sc}}
+\def\typeSz{\name{Sz}}
+\def\typeSv{\name{Sv}}
+\def\typeZ{\name{Z}}
+\def\typePtr{\name{Ptr}}
+
+\def\contuple{\name{tuple}}
+\def\constored{\name{stored}}
+\def\conboxed{\name{boxed}}
+\def\conref{\name{ref}}
+\def\conrepr{\name{rep}}
+\def\consize{\name{size}}
+\def\conasBare{\name{asBare}}
+\def\conasBox{\name{asBox}}
+\def\concopy{\name{copy}}
+\def\conreprInt{\name{repInt}}
+\def\conreprTuple{\name{repTuple}}
+\def\coniint{\name{z}}
+\def\coneiint{\name{exz}}
+\def\consz{\name{sz}}
+\def\consv{\name{sv}}
+\def\conz{\name{z}}
+\def\contrue{\name{true}}
+\def\confalse{\name{false}}
+
+\newcommand{\Unit}{\langle\mspace{0.75mu}\rangle}
+\newcommand{\Prod}[1]{\langle#1\rangle}
+\newcommand{\Array}[1]{\mathopen{\text{\sf[}}#1\mathclose{\text{\sf]}}}
+
+\def\iterIdx{\name{Idx}}
+\def\iterStep{\name{Step}}
+\def\iterFold{\name{Fold}}
+\def\iterColl{\name{Coll}}
+\def\iterIter{\name{Iter}}
+
+\newcommand{\todo}[1]{\textbf{[#1]}}
+
+\def\proofsep{13pt}
+
+\newcommand{\proofspacing}{%
+  \parindent=0cm%
+  \everypar={\hskip 0cm plus 1fill}%
+  \parfillskip=0cm plus 1fill\relax%
+  \parskip=\proofsep}
+
+\newenvironment{inlinecodeexample}%
+{\begin{tabbing}}
+{\end{tabbing}}
+
+\newcommand{\setwherestretch}{\def\arraystretch{1.15}}
+\newcommand{\where}{\hphantom{=\mathord{}}\mathllap{\text{where}}}
+\newenvironment{whereblock}[1]%
+{\setwherestretch\where\begin{array}[t]{#1}}%
+{\end{array}}
+
+%------------------------------------------------------------------------------
+
+\begin{document}
+
+%\titlebanner{banner above paper title}        % These are ignored unless
+%\preprintfooter{preprint}   % 'preprint' option specified.
+
+\title{ZOne}
+%\subtitle{}
+
+\authorinfo{Abdul Dakkak \and Li-Wen Chang \and Carl Pearson}
+           {University of Illinois at Urbana-Champaign}
+           {\{dakkak, lchang20, pearson\}@illinois.edu}
+
+\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country} 
+\copyrightyear{20yy} 
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm} 
+\doi{nnnnnnn.nnnnnnn}
+
+\maketitle
+
+%\category{CR-number}{subcategory}{third-level}
+
+%\terms
+%term1, term2
+
+%\keywords
+%keyword1, keyword2
+
+\input{intro}
+\input{related}
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+\bibliography{paper}
+
+% The bibliography should be embedded for final submission.
+
+%\begin{thebibliography}{}
+%\softraggedright
+%
+%\bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
+%P. Q. Smith, and X. Y. Jones. ...reference text...
+%
+%\end{thebibliography}
+
+\end{document}
