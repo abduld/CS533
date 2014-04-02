@@ -1,0 +1,127 @@
+% define documentclass
+\documentclass[11pt, bibliography=totoc, letter, abstracton, numbers=noenddot]{scrreprt}
+
+% define used packages
+\usepackage[left=2.0cm, right=2.0cm, top=2cm, bottom=3cm]{geometry}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[numbers]{natbib}
+\bibliographystyle{alphadin}
+
+\usepackage{lastpage}
+
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \usepackage{fontspec}
+  \ifxetex
+    \usepackage{xltxtra,xunicode}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+\usepackage{color}
+\usepackage{fancyvrb}
+\DefineShortVerb[commandchars=\\\{\}]{\|}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={},
+            pdftitle={},
+            pdfborder={0 0 0}}
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+% advanced tables
+\usepackage{array}
+
+% header and footer
+\usepackage{fancyhdr}
+
+% links
+\usepackage{url}
+
+% to include images side by side
+\usepackage{subfigure}
+
+%set default pagestyle
+\pagestyle{empty}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+\setcounter{secnumdepth}{-1}
+
+% #####
+% #
+% # START config area
+% #
+% #####
+
+\newcommand{\HEADER}[0]{CS533 HW2 -- Abdul Dakkak}
+\newcommand{\PAGENUMBERS}[0]{Page \pagemark \ of \pageref{LastPage}}
+\newcommand{\DATE}[0]{12.17.2012}
+
+\usepackage{caption}
+\captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{labelformat=empty}
+
+\newcommand{\AUTHOR}[0]{Abdul Dakkak}
+
+% #####
+% #
+% # END config area
+% #
+% #####
+
+% starting the document
+\begin{document}
+
+% set pagenumbering to roman(I II III IV)
+\pagenumbering{arabic}
+\input{fancyMainPart}
+% input the title
+\input{title}
+
+% load the preamble
+\input{report}
+
+% # load the bibliography
+% \bibliography{bibliography}
+
+% end of the document
+\end{document}
