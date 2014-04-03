@@ -1,9 +1,4 @@
 
-SOURCES=paper.tex \
-	intro.tex overview.tex related.tex method.tex \
-	schedule.tex conclusion.tex
-	
-
 FIGURES=
 TARGET=paper
 INKSCAPE=inkscape
@@ -24,5 +19,5 @@ figures/%.eps : figures/%.gp figures/%.dat
 	cd figures && gnuplot $(notdir $<)
 
 clean:
-	rm -fr *.pdf *bbl *dvi *.log
+	rm -fr *.pdf *bbl *dvi *.log *.aux
 
