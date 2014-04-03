@@ -1,4 +1,3 @@
-
 FIGURES=
 TARGET=paper
 INKSCAPE=inkscape
