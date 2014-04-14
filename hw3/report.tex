@@ -1,285 +1,163 @@
-\subsection{Question 1: Prefetching}\label{question-1-prefetching}
-
-\begin{verbatim}
-    (1) for i = 0 to 127 
-    (2)     for j = 0 to 31 
-    (3)         A[i,j] = B[i] * C[j] 
-\end{verbatim}
+\subsection{Question 1: TLS}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
+\item
+  TLS attempts at providing a form of auto-parallization (with some
+  support from the compiler). The compiler insearts check points, and
+  code is executed speculatively (possibly the next iteration of the
+  loop). If reach the end of a checkpoint and the speculative execution
+  is not squashed (via memory writes, exceptions, \ldots{}) then its
+  state is committed. Otherwise, you squash the thread and roll the
+  state back to the point of the checkpoint and resume speculative
+  execution. TLS requires hardware support.
+\item
+  For one, ILP does not work across cores, but TLS can. One of the main
+  disadvantages of ILP is that (usually) a sequence of program
+  statements have true (RAW) dependencies on one another, but a sequence
+  of loop iterations do not have this dependencies (in a doAll loop for
+  example). TLS is also able to parallize larger chunks of loop
+  iterations with the help of the compiler.
+\end{enumerate}
+
+c.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  If you squash, then the instruction count increases. Otherwise, your
+  instruction count stays the same (ignoring the instructions to commit
+  and save the state).
+\item
+  The memory system's performance does not change, you maybe transfering
+  more data on the bus and may evict some cache lines due to capcity or
+  conflict, but memory performance is not impacted very much.
+\item
+  In some cases the predictors need to be duplicated. It might make
+  sense, for example, not to polute the branch predictor if you are
+  speculatively executing and only commit the modifications to the
+  predictor if the thread is not squashed. With duplication, then you
+  may encure some extra cycles to load and save state.
+\end{enumerate}
+
+d.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{4}
 \itemsep1pt\parskip0pt\parsep0pt
 \item
-  You are going to get a cache miss $3*(128*32*4)/16 = 3*1024$ times, so
-  the number of cycles wasted due to cache misses is $3*1024 * 64$
-  cycles = $3*2^16$ cycles. So the above loop would take
+  I would look at the implementation and figure out the dependencies. In
+  some cases, one can just place OpenMP pragmas and have a
+  multi-threaded implementation. In other cases (for example in large
+  code bases), the dependencies are not obvious and one cannot
+  auto-parallize the code. In those cases one has to determine the
+  programming effort and make a judgment on whether the returns justify
+  the effort. TLS may aid the compiler/programming in generating
+  auto-parallizable code by speculatively assuming that there are no
+  dependencies between loop iterations.
 \end{enumerate}
 
-\begin{gather*}
-128*32*16 \text{(cyles when their is a cache hit)} +\\
-      3*2^16 \text{(cycles for memory fetch due to cache miss)} +\\
-      129*33*n \text{where $n$ is however many cycles to execute the branch and conditionals}
-\end{gather*}
+f.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{1}
-\item
-  It is clear the we need to prefetch data $4$ elements away for each
-  aray (e.g. \texttt{C{[}j+4{]}}) since the cache line is $16$ bytes and
-  each element in the array is $4$. We can prefetch the \texttt{B} array
-  in the outer loop (since it is only dependent on the \texttt{i}
-  induction variable), since we will have a cold miss in the first loop
-  iteration, we can service that prefetch before \texttt{2a} and
-  \texttt{2b} for the next \texttt{i} iteration. After the cold miss, we
-  prefetch \texttt{C} and \texttt{A} for the next \texttt{j} iteration.
+g.
 
-\begin{verbatim}
-(1) for i = 0 to 127 
-(1p)    PREFETCH(&B[i+4])
-(2)     for j = 0 to 31
-(3)         A[i,j] = B[i] * C[j] 
-(2a)        PREFETCH(&C[j+4])
-(2a)        PREFETCH(&A[i,j+4])
-\end{verbatim}
-\end{enumerate}
-
-\subsection{Question 2 : Prefetching 2}\label{question-2-prefetching-2}
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  Prefetching tackles the problem of cold cache misses
-\item
-  In a single issue processor you can only have one instruction in
-  flight, so a prefetch latency would not be hidden in place of a cold
-  miss. In a multiple issue processor, you can hide the prefetch
-  latency.
-\item
-  When you are in the critical section, otherwise you cannot assume that
-  the memory location (which you've now bound a register to) has not
-  been modified by another processor.
-\item
-  No, since once you have the prefetched data in cache then the cache
-  coherency model would work the same. Care must be taken however to
-  make sure that you invalidate before you write, otherwise you can
-  prefetch a memory location while another processor is invalidating and
-  writing to it. In binding prefetches, one adds special logic for this
-  issue.
-\item
-  In a long latency cache miss enter runahead mode. In runahead mode,
-  speculatively execute instructions to generate prefetches. When
-  original miss returns, you exit runahead mode. The intuition is that
-  this generates some accurate prefetch information and would hide some
-  of the latency of the original cache miss.
-\item
-  One can use the cores as memory prefetch units. So you offload some of
-  the loads and stores onto them and use them as a closer memory fetch
-  unit (and their L1 cache as a slightly farther away L1 cache).
-\end{enumerate}
-
-\subsection{Question 3 : Synchronization
-1}\label{question-3-synchronization-1}
+\subsection{Question 2 : Speculative Synchronization}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  This would change the semantic of the algorithm since the check
-  \texttt{bar\_name.counter == p} is currently within the atomic block.
-  To see the problem consider the interleaving
-
-\begin{verbatim}
-Thread 1                           Thread 2
-UNLOCK(bar_name.lock);
-                                   LOCK(bar_name.lock);
-                                   mycount = bar_name.counter++;
-if (bar_name.counter == p)
-\end{verbatim}
+  Transactional memory allows regions memory operations to be executed
+  atomically. This is equivalent to grabing a lock, executing the
+  instructions, and then releasing the lock in software. In TLS, this
+  would mean saving the state, executing the instructions, and if not
+  squashed committing the results.
+\item
+  Strong maintains atomicity between transactional and non-trasactional
+  regions while weak only maintains atomicity between transactional
+  regions.
 \end{enumerate}
 
-\texttt{Thread 1}'s condition would fail and would go into an infinite
-loop.
-
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{1}
-\item
-  Yes
+c.
 
 \begin{verbatim}
-BARRIER(bar_name, p) {
-    local_sense = !local_sense
-    if fetch_and_inc(&bar_name.counter) == p {
-        bar_name.counter = 0
-        bar_name.flag = local_sense
-    } else {
-        while (bar_name.flag != local_sense) {}
-    }
-}
+1. TLS attempts to provide a way to execute
+
+2. TM 
 \end{verbatim}
-\item
-  You still need locks, since different threads might enter the same
-  critical sections if the OS performs context switching inside the
-  section. Consider the following timeline
+
+d.
 
 \begin{verbatim}
-                            Thread 1        Thread 2
-> start critical section      i1              
-                              i2 (long latency)
-> os decides to context switch              i1
-                                            i2
-\end{verbatim}
-\end{enumerate}
+1.
 
-this is clearly wrong. And to implement this you would still need an
-atomic operation (again to guarantee that the instruction sequence get
-executed in order).
+2. The output commit problem states that you cannot undo buffers sent to the I/O device. 
+Let's say a thread outputs to a screen, if you execute the thread speculatly, then this means that you cannot undo the output.
+A way around this is to buffer the I/O operations and only commit them at
+a checkpoint.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{3}
-\item
-  \texttt{compare\_and\_swap} is implemented as:
-
-\begin{verbatim}
-compare_and_swap(p, old, new) {
-    BEGIN_ATOMIC()
-    if(*p == old)
-        *p = new
-    END_ATOMIC()
-    return old;
-}
-\end{verbatim}
-\end{enumerate}
-
-Using \texttt{LL} and \texttt{SC} you can implement
-\texttt{compare\_and\_swap} as
-
-\begin{verbatim}
-    compare_and_swap(p, old, new) {
-        do {
-            x = LL(p)
-        } while(!SC(x == old ? old : new, p))
-        return old;
-    }
+3. 
 \end{verbatim}
 
-\texttt{fetch\_and\_inc} is implemented as
+e.
 
-\begin{verbatim}
-    fetch_and_inc(loc) {
-        BEGIN_ATOMIC()
-        x = *old
-        *loc = x + 1
-        END_ATOMIC()
-        return x;
-    }
-\end{verbatim}
-
-Using \texttt{LL} and \texttt{SC} you can implement
-\texttt{fetch\_and\_inc} as
-
-\begin{verbatim}
-    fetch_and_inc(loc) {
-        do {
-            x = LL(loc)
-            y = x + 1
-        } while(!SC(loc, y))
-        return x;
-    }
-\end{verbatim}
-
-\subsection{Question 4 : Synchronization
-2}\label{question-4-synchronization-2}
+\subsection{Question 3 : Processor in Memory}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
 \item
-  Here \texttt{CH} is a cache hit, \texttt{TS} is the test and set
-  operation, and \texttt{WR} is write back.
+  PIM brings computation close to the memory system and therefor can
+  give you high compute throughput. It allows you to not fetch data from
+  memory iff the PIM has the capability to execute the instruction. The
+  main disadvantage is in terms of manifacturing. Memory is manifactured
+  to increase space density, while processors are manifactured to
+  increase compute speed. There is also the basic question of how useful
+  are PIMs in the first place, usual programs have the processor usually
+  fetching memory and execute hundreds or thousands of instructions on
+  the memory fetched, this means that the memory copy overhead is not as
+  high as the compute overhead.
+\item
+  The type of applications that benifit from PIM are ones that do basic
+  operations or permutations on the memory elements (transpose, shuffle,
+  etc\ldots{}). High compute work loads, such as scientific workloads,
+  would not work on PIM (unless you add support for those instructions
+  --- which results in you just having a second processor that's closer
+  to memory).
+\item
+  The PIM is faster in all cases.
 
 \begin{verbatim}
-p1     p2  ... p8
-INV    INV     INV
-RM     RM      RM
-TS     CH      CH
-WR     RM      RM
-       RM      RM
-       TS      CH
-       WR      RM
-           ... TS
+1) for (i = 0; i < 1000; i++) 
+     A[i] = B[i]; 
 \end{verbatim}
 \end{enumerate}
 
-From the above, we can figure out that there is
-$3 + 4 + 5 + ... + (8 + 3) = 60$ bus transactions.
+There is a cache miss every 8 iterations. On the CPU, there will be
+$100*ceil(1000/8) + 1000*1 = 13500cycles$ this means the operations
+complete in $13.5us$. On the PIM, there will be
+$4*ceil(1000/8) + 1000 = 1500cycles$ this means the operations complete
+in $7.5us$.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{1}
-\item
-  There is no guarantee that the first processor would get serviced
-  first, so since there are $60$ bus transactions then $300$ cycles
-  elapse before all $8$ processors get serviced. So, on average $P1$
-  would take $\frac{300}{8} = 37.5 \text{ cycles}$.
-\item
-  If there is no cache then test-test-and-set would still generate less
-  traffic than test-and-set, since test-and-set is essentially an atomic
-  read/write while in test-test-and-set we can perform the read without
-  the need for the write in many iterations. So, you'd save a bit less
-  traffic by not sending data into memory, and just reading from it.
-\item
-  Yes, recall that one can implement either using \texttt{LL} and
-  \texttt{SC} (previous question).
-\end{enumerate}
+\begin{verbatim}
+    2) for (i = 0; i < 1000; i++) 
+         A[i] = B[i] * B[i + 1]; 
+\end{verbatim}
 
-\subsection{Question 5 : CMT and SMT}\label{question-5-cmt-and-smt}
+There is a cache miss every 7 iterations. On the CPU, there will be
+$100*ceil(1000/7) + 2*1000 = 16300cycles$ this means the operations
+complete in $16.3us$. On the PIM, there will be
+$4*ceil(1000/7) + 2000 = 1286cycles$ this means the operations complete
+in $12.86us$.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\item
-  SMT differs from superscalers by providing parallelism at the thread
-  level rather than at the instruction level, and it different from
-  traditional multithreading by using the same core to execute the
-  instructions from different threads simultaneously.
-\item
-  The structures
-\end{enumerate}
+\begin{verbatim}
+    3) for (i = 0; i < 1000; i += 4) 
+         A[i] = B[i]; 
+\end{verbatim}
 
-\begin{itemize}
-\itemsep1pt\parskip0pt\parsep0pt
-\item
-  Branch Predictor --- Augmented with a thread id for SMT. By augmenting
-  with the thread id, you'd increase your prediction accuracy
-\item
-  Return Address Stack --- Duplicate
-\item
-  Register File --- Shared
-\item
-  TLB --- Shared
-\item
-  RAT --- Shared
-\item
-  LSQ --- Shared
-\end{itemize}
+There is a cache miss every 2 iterations. On the CPU, there will be
+$100*ceil(1000/(4*2)) + 1000/4 = 1275cycles$ this means the operations
+complete in $12.75us$. On the PIM, there will be
+$4*ceil(1000/(4*2)) + 1000/4 = 3750cycles$ this means the operations
+complete in $3.75us$.
 
-\begin{enumerate}
-\def\labelenumi{\alph{enumi}.}
-\setcounter{enumi}{2}
-\item
-  As you increase your issue width you will increase the rename, wakeup,
-  and bypass delay. This is due to the increase in wire length.
-\item
-  For CMP these are traditional independent cores with a coherence
-  model. Some hardware is also needed for CMP to allow it to communicate
-  registers with other processors. SMT requires one to duplicate certain
-  hardware structures, such as the PC, return address stack, etc\ldots{}
-  this increases the cost and latency of certain operations. The
-  advantage of SMT is that you can avoid some structural hazards that
-  you'd otherwise get in a uniprocessor machine.
-\item
-  A task may get squashed either because its predecessor gets squashed
-  or if detects that a load and a store conflicts (did not happen in
-  program order). Subsequent tasks also get squashed.
-\end{enumerate}
+\subsection{Question 3 : Reliability}
