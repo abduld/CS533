@@ -2,7 +2,7 @@
 
 \subsection*{Overview}
 
-ZOne currently targets CUDA code for NVIDIA GPUs.
+ZOne currently generates CUDA code for NVIDIA GPUs.
 
 \subsection*{Runtime}
 
@@ -31,7 +31,15 @@ the queue. This allows overlap of data transfer and compute on Fermi GPUs.
 On devices that support more than one concurrent compute operation the amount
 of concurrency is limited by the execution resources on the device. If both
 operations are too large to run concurrently they will be serialized.
+
 \subsubsection*{Intel Threaded Building Blocks}
+Intel Threaded Building Blocks \cite{reinders2007intel} (TBB) is a library for
+scalable parallel
+programming in C++. It provides templates for common parallel programming
+patterns and abstracts away the details of synchronization, load-balancing,
+and cache optimization. Instead of writing threads the programmer specifies
+tasks, and the library maps them onto threads in an efficient manner.
+
 
 \subsection*{Compiler Passes}
 
