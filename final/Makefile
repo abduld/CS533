@@ -18,5 +18,5 @@ figures/%.eps : figures/%.gp figures/%.dat
 	cd figures && gnuplot $(notdir $<)
 
 clean:
-	rm -fr *.pdf *bbl *dvi *.log *.aux
+	rm -fr *.pdf *.bbl *.dvi *.log *.aux *.blg
 
