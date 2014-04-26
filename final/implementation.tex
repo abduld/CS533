@@ -1,0 +1,37 @@
+\section*{Implementation}
+
+\subsection*{Overview}
+
+ZOne currently targets CUDA code for NVIDIA GPUs.
+
+\subsection*{Runtime}
+
+\subsubsection*{CUDA Streams}
+By design, CUDA device kernels execute asycnhronously with respect to the
+host code. This allows host code to overlap with device code, but does not
+allow different device operations (kernels and data transfers) to execute
+concurrently. CUDA exposes device concurrency through \textit{CUDA Streams}
+\cite{kirk2012programming}.
+
+A CUDA Stream is a sequence of operations that
+execute in-order on a CUDA device. Separate streams may be interleaved or
+overlap if possible. In this way, it is possible to overlap computation and
+memory transfers to hide the latency of some operations.
+In order to effectively use streams, CUDA allows synchronization operations
+to occur between arbitrary streams and provides host code that allows the
+CPU to determine the execution status and progress of different streams.
+
+The flexibility of CUDA streams is limited by the device hardware.
+For example, the Fermi architecture can manage one queue of kernels, one queue
+of device$\rightarrow$host transfers, and one queue of host$\rightarrow$device
+transfers. Stream
+dependencies between queues are maintained, but there are no dependencies
+within queues - the operations are simply done in the order they are put into
+the queue. This allows overlap of data transfer and compute on Fermi GPUs.
+On devices that support more than one concurrent compute operation the amount
+of concurrency is limited by the execution resources on the device. If both
+operations are too large to run concurrently they will be serialized.
+\subsubsection*{Intel Threaded Building Blocks}
+
+\subsection*{Compiler Passes}
+
