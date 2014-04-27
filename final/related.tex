@@ -1,5 +1,9 @@
 \section*{Related Work}
 
+The work that is related to our project emphasizes expression of 
+data-parallelism through higher-order functions and high-level languages. In
+this section, we present a selection of related works.
+
 \subsection*{DryadLINQ}
 DryadLINQ\cite{yu2008dryadlinq} is a high-level language for data-parallel
 computing. It is designed to handle batch operations on large-scale
@@ -44,3 +48,17 @@ NOVA\cite{collins2013nova} is a data-parallel polymorphic, statically-typed
 functional language. Parallelism is expressed through higher-order functions
 such as scan, reduce, map, permute, gather, slic, and filter. NOVA has a
 squential/parallel C backend, and a CUDA backend.
+
+\subsection*{Adaptive Implementation Selection in SkePU}
+SkePU\cite{enmyren2010skepu} is a C++ template library for data-parallel
+computations on one or more GPUs through CUDA or OpenCL. SkePU programs are
+expressed through skeletons derived from higher-order functions. Notably,
+SkePU also implements lazy memory copying to avoid unecessary memory transfers.
+
+\subsection*{GPMR}
+GPU MapReduce (GPMR)\cite{stuart2011multi} is a  MapReduce library written
+for multi-GPU clusters. GPMR programs are expressed through the map and reduce
+higher-order functions. GPMR breaks these programs up into a map stage, a sort stage, and a reduce stage, then uses optimizations that reduce communication at
+the expense of computation, which is a tradeoff that is well-suited for GPUs.
+These optimizations are all based off of the data partitioning that the
+programmer selects.
