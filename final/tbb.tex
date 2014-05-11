@@ -6,3 +6,36 @@ programming in C++. It provides templates for common parallel programming
 patterns and abstracts away the details of synchronization, load-balancing,
 and cache optimization. Instead of writing threads the programmer specifies
 tasks, and the library maps them onto threads in an efficient manner.
+
+We use TBB to perform parallel file I/O as well as invoking the
+	\fix{cudaMalloc} call (since it does not have an asynchronus version)
+	in a background thread.
+Since some parts of the code need to be performed atomically, 
+	setting error or modifying the list of memory objects used, for example,
+	each function takes a \fix{zState\_t} object as its first argument.
+The state object contains all ``global'' variables and locks needed to 
+	safely modify state visable from other threads.
+
+
+When the state object is created, we create a set of mutexes that
+	are to be reused (a logger, error, timer, etc\ldots mutexes).
+We then use a macro to allow us to easily write these mutexes:
+
+\begin{verbatim}
+#define zState_mutexed(lbl, ...)            \
+  do {                                      \
+    speculative_spin_mutex mutex =          \
+    zState_getMutex(st, zStateLabel_##lbl); \
+    mutex::scoped_lock();                   \
+    { __VA_ARGS__; }                        \
+  } while (0)
+\end{verbatim}
+
+
+Throughout our code, we use the above macro to update our state.
+To set an error, for example, we just write \fix{zState\_mutexed(Error, zState\_setError(st, memoryAllocation))}.
+
+
+Based on ...., we use \fix{speculative\_spin\_mutex} to increase performance.
+In ....
+\todo[inline]{Why we use \fix{speculative\_spin\_mutex}}

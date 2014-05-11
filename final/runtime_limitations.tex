@@ -1,0 +1,23 @@
+
+\subsubsection{Limitations}
+
+One of the main limitations of the runtime is that the sizes of files need to
+	be known beforehand.
+This is because we start allocating memory before a file is open.
+A slight modification to the runtime would allow us to read file meta data 
+	before starting to allocate.
+
+Another limitation is that files are assumed to be encoded as a raw byte
+	array of a specific C type.
+This avoids us having to write logic to parse the file.
+
+Both of these limitations manifest themselves because we did not want to 
+	write a generic file format or file importer, since this is a problem 
+	orthogonal to this project.
+In the future, one can use file formats,
+	such as HDF~\cite{folk2011overview}, to circumvent these implementation
+	limitations.
+
+In the case of requiring one to parse a file to extract its data into
+	C datatypes, we expect that we would see more performance
+	improvement, since we can perform this parsing in parallel.

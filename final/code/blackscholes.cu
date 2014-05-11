@@ -1,9 +1,9 @@
 
-#include"z.h"
+#include "z.h"
 
-#defineBLOCK_DIM_X64
+#define BLOCK_DIM_X 64
 
-#defineN(x)(erf((x)/sqrt(2.0f))/2+0.5f)
+#define N(x) (erf((x)/sqrt(2.0f))/2+0.5f)
 
 __global__ void gpuBlackScholes(float* call,float* S,float* X,float* T,float* r,float* sigma,int len){
 
