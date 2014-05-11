@@ -6,12 +6,20 @@ applicability and efficiency of the code generation.
 
 \subsection{Runtime}
 
-OpenCL is a heterogeneous computing framework for writing programs that run
-on CPUs, GPUs, DSPs, FPGAs, and other available computing resources. The
-language is inspired by CUDA, so many of the CUDA constructs that ZOne can
+Support for OpenCL, which is a heterogeneous computing framework for writing programs that run
+on CPUs, GPUs, DSPs, FPGAs, and other available computing resources, would be a logical step for the runtime. The
+language is inspired by CUDA, as has stream like capabilities, so many of the CUDA constructs that ZOne can
 generate code for can easily be retargeted to OpenCL to allow ZOne to generate
-efficient code for devices that are not NVIDIA GPUs. The following sections
-describe some of the notable CUDA constructs and their OpenCL counterparts.
+efficient code for devices that are not NVIDIA GPUs. 
 
 \subsection{Compiler}
+
+It is worth mentioning that our aim was not to write an optimized
+compiler (the compiler can be very slow), our aim was to have a compiler
+that can generate optimized code. To that end, we have written the
+compiler in Dart (a Javascript inspired language) that currently
+generates sequential Javascript and threaded CUDA code from our language.
+The Javascript
+generation is primarily meant for debugging purposes.
+
 \todo[inline]{finish}
