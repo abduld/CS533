@@ -1,8 +1,21 @@
 \subsubsection{The Zone Language}
+\label{sec:zonelang}
+
+Our statically typed language is inspired by array and data flow
+programming languages such as Fortran{[}1{]}, APL{[}2{]}, and
+LINQ{[}3{]} where one expresses computation based on operations on
+vectors and arrays. In our language, one can define two vectors of size
+\texttt{100} by
+
+\begin{verbatim}
+n :: Integer = 1000;
+as :: []Real = rand.Real(n);
+bs :: []Real = rand.Real(n); 
+\end{verbatim}
 
 
-The ZOne language borrows different programming textual styles that
-	the we found useful in other languages.
+The syntactic style for ZOne is borrowed from a other languages
+	which we think have good syntax representations.
 The type declaration position was browed from Go \todo[inline]{cite},
 	the function declarations from Dart \todo[inline]{cite},
 	the type notation from Julia \todo[inline{cite}],
@@ -10,16 +23,36 @@ The type declaration position was browed from Go \todo[inline]{cite},
 	and ..\todo[inline]{cite}.
 The result is a unique language that is applicable to wide array
 	of applications.
-In one of our benchmarks, for example, we use it to define the
-	Black-Scholes model which can be expressed in Dart by:
 
+
+
+To give you a taste of the language, in this program we approximate
+\texttt{pi} using Monte Carlo integration
 
 \begin{verbatim}
-TODO FILL ME
-\end{verbatim} 
+def f(a :: Real, b :: Real) :: Bool {
+	return a*a + b*b < 1;
+}
+res :: Integer = zip(as, bs).count(f) / n;
+\end{verbatim}
+
+this would be translated into the map/reduce operations of
+
+\begin{verbatim}
+t1 = map(f, zip(as, bs));
+count = 0;
+reduce((x) => count += x, t1);
+res = count / n;
+\end{verbatim}
+
+The compiler would lower the above into an IR representation,
+maintaining the map/reduce operations. This is discussed 
+in more detail later in the report.
 
 
 The language is purely functional --- disallowing any side effects.
 It is also statically typed --- with type anotation provided by the user.
 Due to time constraints, it lacks many features such as conditionals, but 
 	one can go around that limitation using simple bit operations.
+
+

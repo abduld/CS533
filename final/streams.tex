@@ -1,5 +1,5 @@
 
-\subsubsection*{CUDA Streams}
+\subsubsection{CUDA Streams}
 By design, CUDA device kernels execute asycnhronously with respect to the
 host code. This allows host code to overlap with device code, but does not
 allow different device operations (kernels and data transfers) to execute
@@ -24,3 +24,11 @@ the queue. This allows overlap of data transfer and compute on Fermi GPUs.
 On devices that support more than one concurrent compute operation the amount
 of concurrency is limited by the execution resources on the device. If both
 operations are too large to run concurrently they will be serialized.
+
+
+CUDA streams are used for our copy operations and we register callbacks via the \fix{cudaStreamAddCallback} function to set flags and clear mutexes once
+the asynchronus requrest completes.
+These flags and mutexes are checked before a kernel launch or copy to either	make sure the data is available before a computation, or that data has
+	already been copied and does not need to be recopied.
+
+	

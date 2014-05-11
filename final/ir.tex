@@ -1,1 +1,28 @@
 \subsubsection{Intermediate Representation}
+
+For the MoteCarlo implementation shown in~\ref{sec:zonelang}, the 
+	compiler generates the following IR.
+
+\begin{verbatim}
+Instruction(zab, zip(as, bs))
+Instruction(t1, Map(f, zab))
+Instruction(count, 0)
+Function(g, (x) => count += x)
+Instruction(r2, Reduce(g, t1))
+Instruction(res, divide(count, n))
+\end{verbatim}
+
+A few things to notice about the IR.
+First, while it is similar to $3$-address form,
+	we represent it as an $S$-expression internally 
+	(with a head defining what the instruction is and a body
+	as a list of arguments).
+Second, \fix{Map} and \fix{Reduce} operations are preserved in the IR, 
+	allowing us to keep high level information.
+Finally, binary operations, such as $+$ and $-$, are not
+	treated specially and are simply function calls.
+
+The compiler is able to analyze the above code, inline the map operation
+into the reduce function and privatize the \texttt{count} variable. This
+results in efficient code that can be parallelized and does not produce
+unnecessary temporary arrays.
