@@ -20,7 +20,7 @@
 %-----------------------------------------------------------------------------
 
 
-\documentclass[nocopyrightspace]{sigplanconf}
+\documentclass[nocopyrightspace, 10pt]{sigplanconf}
 
 % The following \documentclass options may be useful:
 %
@@ -32,6 +32,11 @@
 \usepackage{url}
 \usepackage[squaren,thinqspace,binary]{SIunits}
 
+\usepackage{hyperref}
+\newcommand\fnurl[2]{%
+  \href{#2}{#1}\footnote{\url{#2}}%
+}
+\usepackage{lmodern}
 \let\fourth\relax               % Undefine a macro
 \let\second\relax               % Undefine a macro
 \let\degree\relax               % Undefine a macro
@@ -39,7 +44,6 @@
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{graphicx}
 %\usepackage{mathabx}
 \usepackage{mathtools}
 \usepackage{multirow}
@@ -47,148 +51,72 @@
 \usepackage{verbatim}
 \usepackage{fancyvrb}
 
-\hyphenation{mono-morph-izing}
-\hyphenation{mono-morph-ize}
-\hyphenation{mono-morph-ic}
-\hyphenation{poly-morph-ic}
-\hyphenation{geo-mean}
+\usepackage{graphicx}
+\usepackage{subcaption,placeins}
+\usepackage{setspace}
+%\usepackage[tight,footnotesize]{subfigure}
+% \usepackage{subfigure}
 
-%------------------------------------------------------------------------------
-% Global macro definitions
+\usepackage{listings}
+\usepackage{xcolor}
 
-\newcommand{\abs}[1]{\lvert#1\rvert}
-\newcommand{\proportional}{\mathbin{\propto}}
-\newcommand{\inst}{\mathrel{\succeq}}
-\newcommand{\defeq}{\mathrel{:=}}
-\newcommand{\defeqcont}{\mathrel{\hphantom{\defeq}\mathllap{\mid}}}
-\newcommand{\overlineX}[1]{\overline{\vphantom{\beta}#1}}
-\newcommand{\overlinet}[1]{\overline{\vphantom{t}#1}}
-\newcommand{\conexprX}[3]{#1\app\overlineX{#2}\app\overlineX{#3}}
-\newcommand{\conexpr}[3]{#1\app\overline{#2}\app\overline{#3}}
-\newcommand{\dataexpr}[4]{#1\app\overline{#2}\app\overline{#3}\app\overline{#4}}
-\newcommand{\subst}[2]{[#2/#1]}
-\newcommand{\substo}[2]{[\overline{#2/#1}]}
+\usepackage{tabu}
 
-\newcommand{\ztype}[1]{\ensuremath{#1_{\text{type}}}}
-\newcommand{\name}[1]{\ensuremath{\mathsf{#1}}} % Object functions
-\newcommand{\meta}[1]{\ensuremath{\mathrm{#1}}} % Meta-functions
-\newcommand{\bmk}[1]{\texttt{#1}}
-\newcommand{\app}{\;}
-
-\def\T{\mathbin{::}}
-
-\newcommand{\qforall}[1]{\forall#1.\nolinebreak[1]\:}
-\newcommand{\qexists}[1]{\exists#1.\nolinebreak[1]\:}
-\newcommand{\qlambda}[1]{\lambda#1 \to}
-\newcommand{\qLambda}[1]{\Lambda#1 \to}
-\newcommand{\qforallT}[2]{\qforall{#1\T#2}}
-\newcommand{\qexistsT}[2]{\qexists{#1\T#2}}
-\newcommand{\qlambdaT}[2]{\qlambda{#1\T#2}}
-\newcommand{\qLambdaT}[2]{\qLambda{#1\T#2}}
-
-\newcommand{\letE}[1]{\text{\bf let}\;#1\;\text{\bf in}\;}
-\newcommand{\letrecE}[1]{\text{\bf letrec}\;#1\;\text{\bf in}\;}
-\newcommand{\letfE}[1]{\text{\bf letfun}\;#1\;\text{\bf in}\;}
-\newcommand{\caseE}[1]{\text{\bf case}\;#1\nolinebreak[1]\;\text{\bf of}\;}
-\newcommand{\dataE}[1]{\text{\bf data}\nolinebreak[1]\;#1\nolinebreak[0]\;\text{\bf where}\;}
-\newcommand{\classE}[1]{\text{\bf class}\nolinebreak[1]\;#1\nolinebreak[0]\;\text{\bf where}\;}
-\newcommand{\ifE}[3]{\ifO#1\;\thenO#2\;\elseO#3}
-\newcommand{\externO}{\text{\bf extern}\;}
-\newcommand{\caseO}{\text{\bf case}\;}
-\newcommand{\dataO}{\text{\bf data}\;}
-\newcommand{\classO}{\text{\bf class}\;}
-\newcommand{\ifO}{\text{\bf if}\;}
-\newcommand{\thenO}{\text{\bf then}\;}
-\newcommand{\elseO}{\text{\bf else}\;}
-\newcommand{\whereO}{\text{\bf where}\;}
-\newcommand{\ofO}{\text{\bf of}\;}
-\newcommand{\letO}{\text{\bf let}\;}
-\newcommand{\letrecO}{\text{\bf letrec}\;}
-\newcommand{\inO}{\text{\bf in}\;}
-\newcommand{\typeO}{\text{\bf type}\;}
-
-\def\kindstar{\ensuremath{\mathord{\star}}}
-\def\kindZ{\ensuremath{\mathbb{Z}}}
-\def\kindbox{\name{box}}
-\def\kindbare{\name{bare}}
-\def\kindval{\name{val}}
-\def\kindout{\name{mut}}
-\def\kindinit{\name{init}}
+% Display notes/comments with todonotes:
+% \usepackage[disable]{todonotes} % notes/comments not showed
+\usepackage[draft]{todonotes} % notes/comments showed
 
 
-\def\typeOut{\name{Mut}}
-\def\typeStore{\name{Store}}
-\def\typeInit{\name{Init}}
-\def\typeStored{\name{Stored}}
-\def\typeBoxed{\name{Boxed}}
-\def\typeAsBox{\name{AsBox}}
-\def\typeAsBare{\name{AsBare}}
-\def\typeArr{\name{Arr}}
-\def\typeRef{\name{Ref}}
-\def\typeRep{\name{Rep}}
-\def\typeTuple{\name{Tuple}}
-\def\typeTupleV{\name{TupleV}}
-\def\typeList{\name{List}}
-\def\typeInt{\name{Int}}
-\def\typeFloat{\name{Float}}
-\def\typeBool{\mathbf{2}}
-\def\typeMaybe{\name{Maybe}}
-\def\typeScatter{\name{Sc}}
-\def\typeSz{\name{Sz}}
-\def\typeSv{\name{Sv}}
-\def\typeZ{\name{Z}}
-\def\typePtr{\name{Ptr}}
+\usepackage{titlesec}
+\usepackage{hyperref}
 
-\def\contuple{\name{tuple}}
-\def\constored{\name{stored}}
-\def\conboxed{\name{boxed}}
-\def\conref{\name{ref}}
-\def\conrepr{\name{rep}}
-\def\consize{\name{size}}
-\def\conasBare{\name{asBare}}
-\def\conasBox{\name{asBox}}
-\def\concopy{\name{copy}}
-\def\conreprInt{\name{repInt}}
-\def\conreprTuple{\name{repTuple}}
-\def\coniint{\name{z}}
-\def\coneiint{\name{exz}}
-\def\consz{\name{sz}}
-\def\consv{\name{sv}}
-\def\conz{\name{z}}
-\def\contrue{\name{true}}
-\def\confalse{\name{false}}
+\titleclass{\subsubsubsection}{straight}[\subsection]
 
-\newcommand{\Unit}{\langle\mspace{0.75mu}\rangle}
-\newcommand{\Prod}[1]{\langle#1\rangle}
-\newcommand{\Array}[1]{\mathopen{\text{\sf[}}#1\mathclose{\text{\sf]}}}
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
 
-\def\iterIdx{\name{Idx}}
-\def\iterStep{\name{Step}}
-\def\iterFold{\name{Fold}}
-\def\iterColl{\name{Coll}}
-\def\iterIter{\name{Iter}}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}{0pt}{1.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
-\newcommand{\todo}[1]{\textbf{[#1]}}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
 
-\def\proofsep{13pt}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 
-\newcommand{\proofspacing}{%
-  \parindent=0cm%
-  \everypar={\hskip 0cm plus 1fill}%
-  \parfillskip=0cm plus 1fill\relax%
-  \parskip=\proofsep}
+\usepackage{color}
 
-\newenvironment{inlinecodeexample}%
-{\begin{tabbing}}
-{\end{tabbing}}
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+\definecolor{mygreen}{rgb}{0,0.8,0.6}
+\definecolor{myorange}{rgb}{1.0,0.4,0}
 
-\newcommand{\setwherestretch}{\def\arraystretch{1.15}}
-\newcommand{\where}{\hphantom{=\mathord{}}\mathllap{\text{where}}}
-\newenvironment{whereblock}[1]%
-{\setwherestretch\where\begin{array}[t]{#1}}%
-{\end{array}}
+\lstset{language=C++,
+       basicstyle=\ttfamily\scriptsize,
+       keywordstyle=\color{blue}\ttfamily,
+       stringstyle=\color{red}\ttfamily,
+       commentstyle=\color{green}\ttfamily,
+       numbers=left,
+       numbersep=5pt,
+       numberstyle=\tiny\color{mygray},
+       breaklines=true
+      }
 
-%------------------------------------------------------------------------------
+\newcommand{\fix}[1]{\texttt{\small #1}}
 
 \begin{document}
 
@@ -217,10 +145,13 @@
 %\keywords
 %keyword1, keyword2
 
+\input{abstract}
 \input{intro}
+\input{background}
 \input{implementation}
 \input{evaluation}
 
+\input{prior}
 \input{related}
 \input{future}
 
@@ -229,14 +160,8 @@
 \bibliographystyle{abbrvnat}
 \bibliography{paper}
 
-% The bibliography should be embedded for final submission.
+\listoftodos
 
-%\begin{thebibliography}{}
-%\softraggedright
-%
-%\bibitem[Smith et~al.(2009)Smith, Jones]{smith02}
-%P. Q. Smith, and X. Y. Jones. ...reference text...
-%
-%\end{thebibliography}
+\input{appendix}
 
 \end{document}

@@ -1,0 +1,13 @@
+
+\subsection{Runtime}
+The ZOne runtime is primarily written in C/C++. The ZOne runtime provides all
+normal language runtime functions with a focus on hiding I/O latency. The ZOne
+compiler provides information to the runtime about what tasks can be
+interleaved. These runtime features are built on top of CUDA streams and 
+Intel Threaded Building Blocks. The following sections describe the
+implementation of the ZOne runtime.
+
+
+\input{runtime_overview}
+\input{streams}
+\input{tbb}

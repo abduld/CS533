@@ -1,0 +1,43 @@
+\subsubsection{Compiler Passes}
+
+Since C/CUDA code is generated, we rely on the backend compiler
+	to perform further optimizations which we did not have time
+	to implement.
+Note that this assumption is not valid, since we also generate
+	JavaScript code, but one can argue that some optimizations
+	can be deligated to JavaScript optimizers such as the 
+	Google Closure\todo[inline]{cite} compiler. 
+
+\subsubsubsection{Peephole Optimization}
+
+When lowering the AST to IR, many temporary variables are generated.
+To remove them we develop a peephole optimizer and insert removal of
+	temporary variables as one of our patterns.
+
+\subsubsubsection{Def/Use Analysis}
+
+\todo[inline]{finish me.}
+
+\subsubsubsection{Free Variables}
+
+\todo[inline]{finish me.}
+
+\subsubsubsection{Closure Conversion}
+
+Since ZOne is a functional languages, functions are 
+	first class objects.
+This means that some variables inside functions are not
+	bound by the function scope.
+A compiler pass performs closure conversions (also called
+	lambda lifting) to lift the function to the global scope.
+This pass uses the free variables pass and is done late,
+	since other passes, such as 
+	redundant code elimination, may be able to remove the
+	function statement.
+
+\subsubsubsection{Sharing Analysis}
+
+Sharing analysis determins, based on array accesses, the 
+	dependence between arrays.
+\todo[inline]{finish me.}
+
