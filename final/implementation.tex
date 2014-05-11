@@ -1,13 +1,15 @@
 \section{Implementation}
 
-\subsection{Overview}
-
-ZOne currently generates CUDA code for NVIDIA GPUs. ZOne consists of a custom
+ZOne generates CUDA code for NVIDIA GPUs.
+It consists of a custom
 runtime that uses Intel Threaded Building Blocks and CUDA Streams to enable
-concurrency of host and device I/O, data transfer, and compute. The ZOne parser
+concurrency of host and device I/O, data transfer, and compute. The parser
 uses Parser Combinators for Dart\cite{dartParsers}, and the custom compiler
 analysis and transformations are written using the Dart language.
+This section describes both how the combination of language choices, compiler, and runtime are used to hide
+I/O latency.
 
+\input{language}
 \input{compiler}
-
+\input{runtime}
 

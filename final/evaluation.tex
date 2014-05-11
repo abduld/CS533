@@ -1,11 +1,11 @@
-\section*{Evaluation}
+\section{Evaluation}
 
-\subsection*{Benchmarks}
 To demonstrate the performance and correctness of our ZOne implementation, we
-presently use three benchmarks: 2D convolution, histogram, and conjugate
-gradient.
+present three benchmark: convolution, BlackScholes, and histogram.
+While all three befinit greatly from our I/O latency interleaving, we show
+	that histogram also improves from our compiler optimizations.
 
-\subsubsection*{Convolution}
+\subsubsection{Convolution}
 Convolutions have many uses in engineering and mathematics, particularly in
 the image-processing fields. High-performance CPU convolution imlpementations
 involve vectorization and tiling to make full use of cache bandwidth and 
@@ -19,7 +19,7 @@ such code    wow
 \end{verbatim}
 
 
-\subsubsection*{Histogram}
+\subsubsection{Histogram}
 Histograms are a fundamental analysis tool in image and data processing.
 Efficient serial CPU histogram implementations are very straghtforward, but
 due to the data-dependant access pattern efficient GPU implementations are
@@ -39,7 +39,7 @@ such code    wow
 \end{verbatim}
 
 
-\subsubsection*{Conjugate Gradient}
+\subsubsection{Conjugate Gradient}
 
 \begin{verbatim}
 such code    wow
