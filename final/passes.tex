@@ -1,18 +1,19 @@
 \subsubsection{Compiler Passes}
 
-Since C/CUDA code is generated, we rely on the backend compiler
-	to perform further optimizations which we did not have time
+Since the final generated code is C/CUDA, we can rely on the backend compiler
+	to perform optimizations which we did not have time
 	to implement.
-Note that this assumption is not valid, since we also generate
-	JavaScript code, but one can argue that some optimizations
+Note that this assumption is not valid for generated
+	JavaScript code, but if high-performance JavaScript is needed
+        some optimizations
 	can be deligated to offline JavaScript optimizers such as the 
 	Google Closure\cite{bolin2010closure} compiler. 
 
 \subsubsubsection{Peephole Optimization}
 
 When lowering the AST to IR, many temporary variables are generated.
-To remove them we develop a peephole optimizer and insert removal of
-	temporary variables as one of our patterns.
+They are removed through a peephole optimizer that has removal of
+	temporary variables as a pattern.
 
 \subsubsubsection{Def/Use Analysis}
 
@@ -24,7 +25,7 @@ To remove them we develop a peephole optimizer and insert removal of
 
 \subsubsubsection{Closure Conversion}
 
-Since ZOne is a functional languages, functions are 
+Since ZOne is a functional language functions are 
 	first class objects.
 This means that some variables inside functions are not
 	bound by the function scope.
@@ -46,15 +47,15 @@ Sharing analysis determins, based on array accesses, the
 
 The most important factor in parallel computing is how to manage memory
 transfer. If a node computes a chunk of data and it is used in
-subsequent instructions, then it should reuse the output rather than
+subsequent instructions, the node should reuse the output rather than
 send and request the data again. There are two approaches to facilitate
 this. The first is a runtime approach: Hadoop, for example, dispatches
 tasks to maximize reuse of local data. This done via the Hadoop
 scheduler which has a mapping between nodes and data state.
 
 The second is a compiler transformation. This is mainly done via loop
-fusion. If for example, one writes a program
-\fix{map(f, map(g, lst))} then a compiler pass can transform this
+fusion. If for example, in the program
+\fix{map(f, map(g, lst))} a compiler pass can transform this
 into \fix{map(f.g, lst)} where \fix{f.g} is the composition of
 \fix{f} and \fix{g}. A simple peephole optimizer can scan for this
 instruction pattern and perform this transformation. A generalization of
@@ -69,14 +70,14 @@ reducing the number of temporaries increases performance, for example.
 In order to achieve high-performance fusion, a resource estimator and a
 memory counter are necessary. The resource estimator monitor on-chip
 resource usage for a current tiling to avoid register spilling and drop
-of multithreading. The memory counter simple calculate the potential
-memory count saved for fusion. Since 1) on-chip resource of GPU is
+of multithreading. The memory counter calculates the potential
+memory count saved by fusion. Since 1) the on-chip resources of the GPU are
 limited, and 2) the performance gap between on-chip access and off-chip
 access on GPU might has less impact than the gap between on-node access
 and inter-node access on cluster, the decision of fusion may not be
-trivial. Here, we will heuristic function of these two parameter to
-determine the decision of fusion. A precise resource estimator might be
-very difficult to implement and may not really meet the real vendor
+trivial. Here, we will use a heuristic function of these two parameters to
+determine the whether to fuse. A precise resource estimator might be
+very difficult to implement and may not really match the real vendor
 compiler. In this project, we will simply build a routine to rely on the
 feedback of the real vendor compiler after the GPU backend generated the
 code.
@@ -84,15 +85,15 @@ code.
 \subsubsection{Loop Tiling}\label{loop-tiling}
 
 Tiling is critical for performant on GPU programs. In this project,
-automatic tiling will be considered as group several single function
-\fix{f}. Considering function \fix{f} is isolated and map limit
-data dependency among different output, an analysis can be done for
-function \fix{f} to track data sharing among multiple outputs. Here,
+automatic tiling will be considered as group several single functions
+\fix{f}. Considering a function \fix{f} is isolated and map constructs limit
+data dependency among different outputs, an analysis can be done for 
+fix{f} to track data sharing among multiple outputs. Here,
 sharing analysis is considered as access pattern analysis of function
 \texttt{f}. Therefore, tiling for data sharing is achievable.
 
 Coalesced access of GPU is also important for performance. In this
-project, coalesced access is easily considered as a specialized type
+project coalesced access is easily considered as a specialized type of
 tiling. Register packing and thread coarsening of GPU are also
 recognized by applying the same analysis, with different tiling.
 Therefore, we can potentially perform very aggressive tiling for GPU.
@@ -102,6 +103,6 @@ Therefore, we can potentially perform very aggressive tiling for GPU.
 One of the advantages of compiling from a high level languges into CUDA
 is that you can easily tweak parameters for loop tiling, unrolling, and
 fusion. A combination of a resource model and autotuning will be used to
-maximize the performance of the generated code. We will use a bruteforce
-like algorithm, similar to the one employed by ATLAS\cite{atlas} to explore the
+maximize the performance of the generated code. We will use a brute-force-like
+algorithm, similar to the one employed by ATLAS\cite{atlas} to explore the
 parameter space.

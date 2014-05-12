@@ -2,12 +2,12 @@
 
 Using parser combinators, we are able to simplify the definition of 
 	the language (compared to traditional \fix{LR(1)} parsers).
-Using a Dart library, we are able to express the parser within dart and
-	have the parser and lexer in the same file (as compared to two
+The parser is expressed within dart through a Dart library and
+	the parser and lexer are in the same file (as compared to two
 	files as traditionally used by \fix{lex/yacc}).
 The library also provides convinient primitives, such as a definition of
 	a floating point numbers, to simplify our definition.
-Futhermore, it provides us with utility function to declare common patterns
+Futhermore, it provides utility functions to declare common patterns
 	in a convinient manner.
 To express function paramaters, for example, first define how one function
 	parameter is to be parsed:
@@ -18,7 +18,7 @@ param() =>
 		(id, type) => new ParameterNode(id, type); 
 \end{verbatim}
 
-Then, we use the builtin utility function \fix{sepBy}, \fix{parens},
+Then, we use the built-in utility function \fix{sepBy}, \fix{parens},
 	and \fix{comma} to define how a collection of parameters are
 	to be parsed
 
@@ -26,7 +26,7 @@ Then, we use the builtin utility function \fix{sepBy}, \fix{parens},
 params() => parens(param().sepBy(comma));
 \end{verbatim}
 
-While using parser combinator is cleaner, it does take longer to get correctly
+While using parser combinator is cleaner, it does take longer to correct
 	that traditional $LR$ parsers --- left recursions, for example, are
 	not allowable in parser combinators and one must restructure the parser
 	to go around this limitation.

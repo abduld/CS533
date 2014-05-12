@@ -22,10 +22,10 @@
   \label{fig:unord}
 \end{figure}
 
-In many cases certain overlaping are not possible, either because of
+In many cases certain overlapings are not possible, either because of
   hardware restrictions or language semantic restrictions.
-In CUDA, for example, one cannot overlap two copy memory to device
-  operations, since they both share the same PCI-Express bus.
+In CUDA, for example, two copy memory to device operations cannot be
+overlapped since they both share the same PCI-Express bus.
 One can overlap the compute with the copy memory to device, however.
 This results in the programer having to add logic to keep track of which
   overlaps are occuring at which point --- causing the program to be
