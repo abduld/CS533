@@ -5,8 +5,8 @@ Since C/CUDA code is generated, we rely on the backend compiler
 	to implement.
 Note that this assumption is not valid, since we also generate
 	JavaScript code, but one can argue that some optimizations
-	can be deligated to JavaScript optimizers such as the 
-	Google Closure\todo[inline]{cite} compiler. 
+	can be deligated to offline JavaScript optimizers such as the 
+	Google Closure\cite{bolin2010closure} compiler. 
 
 \subsubsubsection{Peephole Optimization}
 
@@ -54,12 +54,12 @@ scheduler which has a mapping between nodes and data state.
 
 The second is a compiler transformation. This is mainly done via loop
 fusion. If for example, one writes a program
-\texttt{map(f, map(g, lst))} then a compiler pass can transform this
-into \texttt{map(f.g, lst)} where \texttt{f.g} is the composition of
-\texttt{f} and \texttt{g}. A simple peephole optimizer can scan for this
+\fix{map(f, map(g, lst))} then a compiler pass can transform this
+into \fix{map(f.g, lst)} where \fix{f.g} is the composition of
+\fix{f} and \fix{g}. A simple peephole optimizer can scan for this
 instruction pattern and perform this transformation. A generalization of
 this technique for other list primitives is found in the the Haskell
-vector library. Using a concept called Stream Fusion{[}4{]}, Haskell
+vector library. Using a concept called Stream Fusion\cite{StreamFusion}, Haskell
 fuses most function loops to remove unnecessary temporaries and list
 traversals. In this project, we will adopt some aspects of how Haskell
 performs this transformation when they are applicable in the CUDA
@@ -85,9 +85,9 @@ code.
 
 Tiling is critical for performant on GPU programs. In this project,
 automatic tiling will be considered as group several single function
-\texttt{f}. Considering function \texttt{f} is isolated and map limit
+\fix{f}. Considering function \fix{f} is isolated and map limit
 data dependency among different output, an analysis can be done for
-function \texttt{f} to track data sharing among multiple outputs. Here,
+function \fix{f} to track data sharing among multiple outputs. Here,
 sharing analysis is considered as access pattern analysis of function
 \texttt{f}. Therefore, tiling for data sharing is achievable.
 
@@ -103,5 +103,5 @@ One of the advantages of compiling from a high level languges into CUDA
 is that you can easily tweak parameters for loop tiling, unrolling, and
 fusion. A combination of a resource model and autotuning will be used to
 maximize the performance of the generated code. We will use a bruteforce
-like algorithm, similar to the one employed by ATLAS to explore the
+like algorithm, similar to the one employed by ATLAS\cite{atlas} to explore the
 parameter space.

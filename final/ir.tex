@@ -23,6 +23,6 @@ Finally, binary operations, such as $+$ and $-$, are not
 	treated specially and are simply function calls.
 
 The compiler is able to analyze the above code, inline the map operation
-into the reduce function and privatize the \texttt{count} variable. This
+into the reduce function and privatize the \fix{count} variable. This
 results in efficient code that can be parallelized and does not produce
 unnecessary temporary arrays.
