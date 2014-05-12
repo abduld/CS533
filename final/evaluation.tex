@@ -1,30 +1,41 @@
 \section{Evaluation}
 
 To demonstrate the performance and correctness of our ZOne implementation, we
-present three benchmark: convolution, BlackScholes, and histogram.
+present three benchmark: convolution, Black-Scholes, European pricing, and histogram.
 While all three befinit greatly from our I/O latency interleaving, we show
 	that histogram also improves from our compiler optimizations.
 
 
-\subsection{Vector Add}
-
 \subsection{Convolution}
-Convolutions have many uses in engineering and mathematics, particularly in
-the image-processing fields. High-performance CPU convolution imlpementations
-involve vectorization and tiling to make full use of cache bandwidth and 
-execution resources. The ZOne convolution code is figure~\ref{fig:stencil}.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/stencil.pdf}
-\caption{Speedup over CUDA verion..todo}
+\caption{Speedup of convolution over naive CUDA implementation.
+	The $x$-axis is the convolved vector size in bytes.}
 \label{fig:stencil}
 \centering
 \end{figure}
 
+Convolutions has wide applications in both engineering and mathematics.
+Depending on the ``kernel'' (or mask), convolution, or stencil as it is sometimes called,  	can be used to approximate a differential operator --- 
+ a $[-\frac{1}{h}, 0, \frac{1}{h}]$ kernel approximates the gradient operator, for example.
+High-performance CPU convolution imlpementations
+involve vectorization and tiling to make full use of cache bandwidth and 
+execution resources.
+The biggest impact from a GPU point of view, however, is the use of fast 
+	scratch pad memory as a user managed cache.
+We therefore see little performance benifits from our compiler passes, and the
+	performance primarily stems from interleaving memory copies.
+Figure~\ref{fig:stencil} shows the speedup achieved by our runtime for a 1D
+	convolution compared to a naive CUDA implementation.
+
+
 \subsection{Black-Scholes}
 Black-Scholes models option pricing by simplifying ito's formula, and some other stuf....
 
+
+Coarsining increases register preasure, and degrades performance.
 
 
 \begin{figure}
