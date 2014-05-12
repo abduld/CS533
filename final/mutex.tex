@@ -6,6 +6,7 @@ Blocks built on top of trasactional memory. The locks and unlocks in
 the lock is not modified in memory and the thread continues until it has
 reached the unlock. Any changes that the thread makes to memory will not be
 initially visible to other processors. If no conflicts occur during that time, the changes are atomically commited to memory.
+
 A conflict could either take the form of a memory location being updated, or
 the lock being taken non-speculatively by another processor. To avoid false
 sharing, a \fix{speculative\_spin\_mutex} takes two cache lines. This
