@@ -35,13 +35,22 @@ Other approaches include sorting the input data and then finding the start
 index of each bucket, and approaches that use graphics-specific hardware like
 occlusion queries.
 
-\begin{verbatim}
-such code    wow
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{data/histogram.pdf}
+\caption{Frames per seconds achieved for histogram equalization kernel on a 4K video. The figure compares the tuned GPU implementation to a naive CPU and tuned CPU implementations. The tuned GPU implementation uses thread coarsining to achieve high fps.}
+\label{fig:histogram}
+\centering
+\end{figure}
 
-   impress
-                speed
-\end{verbatim}
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{data/histogramc.pdf}
+\caption{The coarsining parameter impacts the performance of the histogram equalization kernel.}
+\label{fig:histogramCoarsining}
+\centering
+\end{figure}
 
 \subsection{Black-Scholes}
 Black-Scholes models option pricing by simplifying ito's formula, and some other stuf....
