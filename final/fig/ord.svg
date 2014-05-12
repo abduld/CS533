@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="ord.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         id="path3901"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt"
+         transform="scale(0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lend"
+       style="overflow:visible;">
+      <path
+         id="path3780"
+         style="fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Lend"
+       style="overflow:visible;">
+      <path
+         id="path3762"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutL-2"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3901-3"
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="scale(0.8,0.8)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.12374369"
+     inkscape:cx="931.65852"
+     inkscape:cy="1234.8645"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1538"
+     inkscape:window-height="878"
+     inkscape:window-x="54"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:22.17303848;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m -2161.385,741.74725 c 6557.0709,0 6584.9734,0 6584.9734,0"
+       id="path2985"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755"
+       width="891.42859"
+       height="297.14285"
+       x="-1802.8572"
+       y="-699.06641"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1"
+       width="891.42859"
+       height="297.14285"
+       x="-911.42859"
+       y="-699.06641"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7"
+       width="368.57144"
+       height="297.14285"
+       x="-20.000042"
+       y="-699.06641"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4"
+       width="411.42859"
+       height="297.14285"
+       x="348.57144"
+       y="-699.06641"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0"
+       width="891.42859"
+       height="297.14285"
+       x="751.42859"
+       y="-699.06641"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-4"
+       width="891.42859"
+       height="297.14285"
+       x="-911.42859"
+       y="-401.06638"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-8"
+       width="891.42859"
+       height="297.14285"
+       x="-20.000034"
+       y="-401.06638"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-8"
+       width="368.57144"
+       height="297.14285"
+       x="871.42853"
+       y="-401.06638"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4-2"
+       width="411.42859"
+       height="297.14285"
+       x="1240"
+       y="-401.06638"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-4"
+       width="891.42859"
+       height="297.14285"
+       x="1642.8572"
+       y="-401.06638"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-5"
+       width="891.42859"
+       height="297.14285"
+       x="-20.00009"
+       y="-104.78071"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-1"
+       width="891.42859"
+       height="297.14285"
+       x="871.42847"
+       y="-104.7807"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-7"
+       width="368.57144"
+       height="297.14285"
+       x="1762.8571"
+       y="-104.7807"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4-1"
+       width="411.42859"
+       height="297.14285"
+       x="2131.4285"
+       y="-104.7807"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-1"
+       width="891.42859"
+       height="297.14285"
+       x="2534.2856"
+       y="-104.7807"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-4-2"
+       width="891.42859"
+       height="297.14285"
+       x="871.42841"
+       y="193.21928"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-8-7"
+       width="891.42859"
+       height="297.14285"
+       x="1762.8569"
+       y="193.2193"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-8-6"
+       width="368.57144"
+       height="297.14285"
+       x="2654.2856"
+       y="193.2193"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4-2-1"
+       width="411.42859"
+       height="297.14285"
+       x="3022.8569"
+       y="193.2193"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-4-4"
+       width="891.42859"
+       height="297.14285"
+       x="3425.7141"
+       y="193.2193"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:12.26344013;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m -2155.2669,736.65765 c 0,-1899.65905 0,-1907.74275 0,-1907.74275"
+       id="path2985-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-2426.0635"
+       y="-1270.03"
+       id="text4964"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966"
+         x="-2426.0635"
+         y="-1270.03">Threads</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="4604.7852"
+       y="820.2616"
+       id="text4964-2"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1"
+         x="4604.7852"
+         y="820.2616">Time</tspan></text>
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783333;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6"
+       width="243.6819"
+       height="303.97501"
+       x="-1669.3947"
+       y="859.96857"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-1326.9102"
+       y="1106.8073"
+       id="text4964-2-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5"
+         x="-1326.9102"
+         y="1106.8073">I/O</tspan></text>
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783332999999970;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6-7"
+       width="243.6819"
+       height="303.97501"
+       x="-845.11017"
+       y="859.96857"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-502.62567"
+       y="1106.8073"
+       id="text4964-2-8-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5-1"
+         x="-502.62567"
+         y="1106.8073">Memory Copy</tspan></text>
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783332999999970;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6-7-8"
+       width="243.6819"
+       height="303.97501"
+       x="1175.1949"
+       y="859.96857"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="1517.6794"
+       y="1106.8073"
+       id="text4964-2-8-6-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\ord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5-1-2"
+         x="1517.6794"
+         y="1106.8073">Compute</tspan></text>
+  </g>
+</svg>

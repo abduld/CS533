@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg5140"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="unord.svg">
+  <defs
+     id="defs5142">
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutL"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3901"
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="scale(0.8,0.8)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5101"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path5103"
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt"
+         transform="scale(0.8,0.8)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.12374369"
+     inkscape:cx="375"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1538"
+     inkscape:window-height="878"
+     inkscape:window-x="54"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5145">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:22.17303848;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m -4181.8732,1269.0728 c 6557.0708,0 6584.9733,0 6584.9733,0"
+       id="path2985"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755"
+       width="891.42859"
+       height="297.14285"
+       x="-4065.782"
+       y="-171.74078"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1"
+       width="891.42859"
+       height="297.14285"
+       x="-3174.3533"
+       y="-171.74078"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7"
+       width="368.57144"
+       height="297.14285"
+       x="-2282.9248"
+       y="-171.74078"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4"
+       width="411.42859"
+       height="297.14285"
+       x="-1007.1755"
+       y="-171.74078"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0"
+       width="891.42859"
+       height="297.14285"
+       x="-604.3183"
+       y="-171.74078"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:10.01717186;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-4"
+       width="419.11942"
+       height="301.62567"
+       x="-3176.5947"
+       y="124.0178"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:20.08113861;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-8"
+       width="1742.4568"
+       height="291.56171"
+       x="-2748.845"
+       y="129.04979"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-8"
+       width="368.57144"
+       height="297.14285"
+       x="-995.51636"
+       y="126.25922"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-4"
+       width="891.42859"
+       height="297.14285"
+       x="301.19138"
+       y="126.25922"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:17.8408947;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-5"
+       width="1364.8796"
+       height="293.80197"
+       x="-2758.0464"
+       y="424.2153"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-1"
+       width="891.42859"
+       height="297.14285"
+       x="-987.43536"
+       y="422.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-7"
+       width="368.57144"
+       height="297.14285"
+       x="-96.006966"
+       y="422.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4-1"
+       width="411.42859"
+       height="297.14285"
+       x="797.84418"
+       y="422.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-1"
+       width="891.42859"
+       height="297.14285"
+       x="1200.701"
+       y="422.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-4-2"
+       width="891.42859"
+       height="297.14285"
+       x="-1391.4965"
+       y="720.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-8-7"
+       width="891.42859"
+       height="297.14285"
+       x="-96.006966"
+       y="720.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-7-8-6"
+       width="368.57144"
+       height="297.14285"
+       x="795.42169"
+       y="720.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-1-4-2-1"
+       width="411.42859"
+       height="297.14285"
+       x="1163.9929"
+       y="720.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:14.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-0-4-4"
+       width="891.42859"
+       height="297.14285"
+       x="2100.2112"
+       y="720.54486"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:12.26344013;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#TriangleOutL)"
+       d="m -4175.7551,1263.9832 c 0,-1899.65898 0,-1907.74268 0,-1907.74268"
+       id="path2985-2"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-4446.5518"
+       y="-742.70441"
+       id="text4964"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966"
+         x="-4446.5518"
+         y="-742.70441">Threads</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="2584.2969"
+       y="1347.5873"
+       id="text4964-2"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1"
+         x="2584.2969"
+         y="1347.5873">Time</tspan></text>
+    <rect
+       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783333;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6"
+       width="243.6819"
+       height="303.97501"
+       x="-3689.8828"
+       y="1387.2943"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-3347.3984"
+       y="1634.1329"
+       id="text4964-2-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5"
+         x="-3347.3984"
+         y="1634.1329">I/O</tspan></text>
+    <rect
+       style="color:#000000;fill:#5f8dd3;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783333;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6-7"
+       width="243.6819"
+       height="303.97501"
+       x="-2865.5984"
+       y="1387.2943"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-2523.114"
+       y="1634.1329"
+       id="text4964-2-8-6"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5-1"
+         x="-2523.114"
+         y="1634.1329">Memory Copy</tspan></text>
+    <rect
+       style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#280b0b;stroke-width:7.66783333;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4755-6-7-8"
+       width="243.6819"
+       height="303.97501"
+       x="-845.29327"
+       y="1387.2943"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:271.71984863px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Calibri;-inkscape-font-specification:Calibri"
+       x="-502.80887"
+       y="1634.1329"
+       id="text4964-2-8-6-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="C:\Users\abduld\Documents\GitHub\CS533\final\fig\unord.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan4966-1-5-1-2"
+         x="-502.80887"
+         y="1634.1329">Compute</tspan></text>
+  </g>
+</svg>
