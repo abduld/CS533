@@ -38,9 +38,16 @@ This pass uses the free variables pass and is done late,
 
 \subsubsubsection{Sharing Analysis}
 
-Sharing analysis determins, based on array accesses, the 
-	dependence between arrays.
-\todo[inline]{finish me.}
+Sharing analysis determines the data dependency between input and output arrays.
+In this work, we focus on only simple lambda functions, which contain only a few statements.
+Only the coarse sharing pattern, which means one sharing pattern per array per lambda function, is generated.
+All memory accesses associated one array in a lambda function are merged to its coarse sharing pattern.
+
+Our sharing pattern analysis is similar to array reference-based analysis \cite{alg_reference}.
+However, our analysis is simplified because the feature of map operation in our language.
+Therefore, instead of recording all array reference in all iterations, we only record reference in a subset of iterations, which get referenced, 
+since we know all iterations of map are independent. 
+In this sense, we dramatically reduce the overhead of analysis.
 
 
 \subsubsection{Loop Fusion}\label{loop-fusion}
