@@ -9,12 +9,10 @@
 \centering
 \end{figure}
 
-The purpose of the runtime is twofold.
-First, it simplifies our code generation by allowing us to 
-	have a unified view of memory and simplifying the 
-	code generator.\todo{this says simplifying code generation
-simplifies the code generation.}
-Second, it eagerly copies data to the GPU.
+The runtime simplifies our code generator by abstracting common operations
+	into (essentially) a separate project.
+The runtime's job is to eagerly copy data to the GPU and execute the
+ 	computation while maintaining the dependencies.
 
 To unify memory, we define a new object called a \fix{zMemoryGroup\_t}
 This object contains multiple \fix{zMemory\_t}s which,
@@ -27,7 +25,7 @@ Each \fix{zMemory\_t} has a status, such as
 The memory object also contains size and type information,
 	and the runtime operates on \fix{zMemory\_t} rather than \fix{void *}
 	types.
-This abstraction will eases adding support for other languages, such 
+This abstraction will eases adding support for other languages, such
 	as OpenCL, without changing the code generator.
 
 To eagerly copy memory to the GPU, we use logic similar to what is
@@ -35,11 +33,11 @@ To eagerly copy memory to the GPU, we use logic similar to what is
 In (1), we concurrently alloate CPU memory and GPU memory.
 The file is then opened in (2) and different chunks are read into
 	the CPU memory one it's been allocated (we \fix{mmap} the file
-	with the \fix{PROT\_READ, MAP\_PRIVATE} options to increase
+	with the \fix{PROT\_READ} and \fix{MAP\_PRIVATE} options to increase
 	performance).
-Once a chunk of data is read and the GPU memory has been allocated, data 
+Once a chunk of data is read and the GPU memory has been allocated, data
 	is copied to the GPU in (3).
-Note that while we have an abstracted view of chunks of memory 
+Note that while we have an abstracted view of chunks of memory
 	(defined by the datatype \fix{zMemory\_t}), memory is in fact
 	contiguious and placed in a \fix{zMemoryGroup\_t} object.
 This makes it possible to free memory efficiently, and, althought

@@ -10,10 +10,10 @@ tasks, and the library maps them onto threads in an efficient manner.
 We use TBB to perform parallel file I/O as well as invoking the
 	\fix{cudaMalloc} call (since it does not have an asynchronus version)
 	in a background thread.
-Since some parts of the code need to be performed atomically, such as 
+Since some parts of the code need to be performed atomically, such as
 	setting error codes or modifying the list of memory objects used,
 	each function takes a \fix{zState\_t} object as its first argument.
-The state object contains all ``global'' variables and locks needed to 
+The state object contains all ``global'' variables and locks needed to
 	safely modify state visible from other threads.
 
 
@@ -24,15 +24,16 @@ We then use a macro to allow us to easily write these mutexes:
 \begin{verbatim}
 #define zState_mutexed(lbl, ...)            \
   do {                                      \
-    speculative_spin_mutex mutex =          \
-    zState_getMutex(st, zStateLabel_##lbl); \
-    mutex::scoped_lock();                   \
-    { __VA_ARGS__; }                        \
+    speculative_spin_mutex::scoped_lock(    \
+      zState_getMutex(st, zStateLabel_##lbl)\
+    );                                      \
+    __VA_ARGS__;                            \
   } while (0)
 \end{verbatim}
 
 
-Throughout the code, we use the above macro to update our state.
-For example, setting an error involves \fix{zState\_mutexed(Error, zState\_setError(st, memoryAllocation))}.
+Throughout our runtime code, we use the above macro to update our state ---
+ 	updating the error code via \fix{zState\_mutexed(Error, zState\_setError(st, allocate))},
+	for example.
 
 \input{mutex}
