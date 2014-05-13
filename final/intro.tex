@@ -1,34 +1,40 @@
 \section*{Introduction}
 
-With the advent of personal digital devices, big data has become an
-issue faced not only by large companies but by regular users. Processing
-this data using traditional languages is both inefficient and sometimes
-not feasible. By their nature, for many tasks, computing on big data is
-a highly parallel and scalable and a multitude of solutions have been
-proposed to make writing programs to process big data more manageable.
-One of the most successful, in terms of deployment, is the
+As the programmability and capabilities of GPUs have risen, GPUs have moved
+beyond their initial use as video accelerators and become a widely-used tool
+in the computing toolbox. Scientific and engineering programs were the first
+to see benefit, but with the advent of personal digital devices, big data has
+become another pressing issue that GPUs can be adapted to tackle.
+
+There have been several successful non-GPU frameworks for processing big data.
+One of the most successful in terms of deployment is the
 Map-Reduce\cite{MapReduce} programming style (an example is Hadoop
 \cite{Hadoop}) which
 all big-data companies employ in some way. The problem with this
 programming style is that many programming patterns cannot be easily
-expressed through it.
+expressed through it, and no deployed system makes use of GPUs.
 
-The goal of this project is to investigate what is needed from a compiler and
-architecture perspective to make personal computing with large data both
-efficient and practical. This investigation targets four areas:
-\begin{itemize}
-\item Language development: What features and restrictions could a
-      programming language have to enable useful parallelism?
-\item Compiler IR: What information could the IR contain to enable
-      optimization of parallel code?
-\item Compiler transformations: What transformations are enabled by
-      the langauge and IR choices?
-\item Runtime: How can the runtime be designed to support computation
-      on large datasets?
-\end{itemize}
+One of the reasons for this is that common GPU programming languages like
+OpenCL and CUDA only allow programmers to extract peak performance
+at the cost of
+considerable effort. This effort is typically focused on efficiently
+utilizing the GPU's
+on-chip resources, or carefully avoiding the caveats of massively-parallel
+programming. Processing "big data" only complicates programming by adding
+a new problem into view of the
+programmer - how that data should move to compute that is supposed to
+handle it? This problem exists in other contexts as well, but due to the scale
+of big data its relevance is increased.
 
-We have developed ZOne, a new programming language, to explore
-these questions. ZOne's compiler IR include \fix{map} and 
+CUDA and OpenCL both provide constructs that allow a certain degree of
+overlap between compute and data transfer. These constructs are difficult to
+manage even with data dependencies are simple - as data sets grow larger, the
+dependencies will only grow more complicated and efficient programs will be
+more and more difficult to create.
+
+We have developed ZOne (a new programming language) and a parallel runtime
+to explore the issues of map-reduce and data transfer on GPUs.
+ZOne's compiler IR include \fix{map} and 
 \fix{reduce} instructions to effectively map computation across
 GPU cores. Compiler transformations include loop fusion,
 loop tiling, and autotuning for improved performance on both CPU
