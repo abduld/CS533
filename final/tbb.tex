@@ -24,10 +24,10 @@ We then use a macro to allow us to easily write these mutexes:
 \begin{verbatim}
 #define zState_mutexed(lbl, ...)            \
   do {                                      \
-    speculative_spin_mutex mutex =          \
-    zState_getMutex(st, zStateLabel_##lbl); \
-    mutex::scoped_lock();                   \
-    { __VA_ARGS__; }                        \
+    speculative_spin_mutex::scoped_lock(    \
+      zState_getMutex(st, zStateLabel_##lbl)\
+    );                                      \
+    __VA_ARGS__;                            \
   } while (0)
 \end{verbatim}
 
