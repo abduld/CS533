@@ -1,13 +1,21 @@
 \subsubsection{Compiler Passes}
 
+The most important factor in parallel computing is how to manage memory
+transfer. If a node computes a chunk of data and it is used in
+subsequent instructions, the node should reuse the output rather than
+send and request the data again. There are two approaches to facilitate
+this. The first is a runtime approach: Hadoop, for example, dispatches
+tasks to maximize reuse of local data. This done via the Hadoop
+scheduler which has a mapping between nodes and data state.
+
 Since the final generated code is C/CUDA, we can rely on the backend compiler
 	to perform optimizations which we did not have time
 	to implement.
 Note that this assumption is not valid for generated
 	JavaScript code, but if high-performance JavaScript is needed
         some optimizations
-	can be deligated to offline JavaScript optimizers such as the 
-	Google Closure\cite{bolin2010closure} compiler. 
+	can be delegated to offline JavaScript optimizers such as the
+	Google Closure\cite{bolin2010closure} compiler.
 
 \subsubsubsection{Peephole Optimization}
 
@@ -17,44 +25,45 @@ They are removed through a peephole optimizer that has removal of
 
 \subsubsubsection{Def/Use Analysis}
 
-\todo[inline]{finish me.}
+The Def/Use analysis are two passes that compute which variables are defined
+	or used at each program point.
+The passes also define the life span of variables.
+This is a simple pass, since the compiler considers the IR to be in SSA form
+ 	at this stage --- and while this is a fair assumption considering our
+	language as purely functional, we do not have a pass to enforce this currently.
 
 \subsubsubsection{Free Variables}
 
-\todo[inline]{finish me.}
+Free variables are ones which are not bound by the current scope.
+This pass computes the set of variables at each statement using
+	the Def/Use information.
+At each program point, $OUT(p) = \cup(In(p))$ and $Out(p) = Out(p) \ Kill(p) \cup Gen(p)$
+	where the $Gen$ set are the use set at that point, and the $Kill$ set is the set
+ of definitions.
 
 \subsubsubsection{Closure Conversion}
 
-Since ZOne is a functional language functions are 
+Since ZOne is a functional language functions are
 	first class objects.
 This means that some variables inside functions are not
 	bound by the function scope.
 A compiler pass performs closure conversions (also called
 	lambda lifting) to lift the function to the global scope.
 This pass uses the free variables pass and is done late,
-	since other passes, such as 
+	since other passes, such as
 	redundant code elimination, may be able to remove the
 	function statement.
 
 \subsubsubsection{Sharing Analysis}
 
-Sharing analysis determins, based on array accesses, the 
+Sharing analysis determines, based on array accesses, the
 	dependence between arrays.
 \todo[inline]{finish me.}
 
 
 \subsubsection{Loop Fusion}\label{loop-fusion}
 
-The most important factor in parallel computing is how to manage memory
-transfer. If a node computes a chunk of data and it is used in
-subsequent instructions, the node should reuse the output rather than
-send and request the data again. There are two approaches to facilitate
-this. The first is a runtime approach: Hadoop, for example, dispatches
-tasks to maximize reuse of local data. This done via the Hadoop
-scheduler which has a mapping between nodes and data state.
-
-The second is a compiler transformation. This is mainly done via loop
-fusion. If for example, in the program
+If for example, in the program
 \fix{map(f, map(g, lst))} a compiler pass can transform this
 into \fix{map(f.g, lst)} where \fix{f.g} is the composition of
 \fix{f} and \fix{g}. A simple peephole optimizer can scan for this
@@ -87,7 +96,7 @@ code.
 Tiling is critical for performant on GPU programs. In this project,
 automatic tiling will be considered as group several single functions
 \fix{f}. Considering a function \fix{f} is isolated and map constructs limit
-data dependency among different outputs, an analysis can be done for 
+data dependency among different outputs, an analysis can be done for
 fix{f} to track data sharing among multiple outputs. Here,
 sharing analysis is considered as access pattern analysis of function
 \texttt{f}. Therefore, tiling for data sharing is achievable.
@@ -100,7 +109,7 @@ Therefore, we can potentially perform very aggressive tiling for GPU.
 
 \subsubsection{Autotuning}\label{autotuning}
 
-One of the advantages of compiling from a high level languges into CUDA
+One of the advantages of compiling from a high level languages into CUDA
 is that you can easily tweak parameters for loop tiling, unrolling, and
 fusion. A combination of a resource model and autotuning will be used to
 maximize the performance of the generated code. We will use a brute-force-like

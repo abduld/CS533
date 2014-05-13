@@ -1,11 +1,12 @@
 
-Based on ...., we use \fix{speculative\_spin\_mutex} to increase performance.
+We use \fix{speculative\_spin\_mutex} to increase performance.
 \fix{speculative\_spin\_mutex}es are a lock class in Intel Threaded Building
-Blocks built on top of trasactional memory. The locks and unlocks in
+Blocks built on top of transactional memory. The locks and unlocks in
 \fix{speculative\_spin\_mutex} are marked as eligible for elision, meaning that
 the lock is not modified in memory and the thread continues until it has
 reached the unlock. Any changes that the thread makes to memory will not be
-initially visible to other processors. If no conflicts occur during that time, the changes are atomically commited to memory.
+initially visible to other processors. If no conflicts occur during that time,
+the changes are atomically committed to memory.
 
 A conflict could either take the form of a memory location being updated, or
 the lock being taken non-speculatively by another processor. To avoid false
@@ -13,7 +14,6 @@ sharing, a \fix{speculative\_spin\_mutex} takes two cache lines. This
 guarantees that at least one cache line boundary will exist within the object,
 so the actual lock portion of the class can fill up an entire cache line by
 itself. Presently, \fix{speculative\_spin\_mutex} will only execute
-speculatively on 4th-generation Intel Core parts with TSX enabled.
+speculatively on 4th-generation ``Haswell'' Intel Core parts with TSX enabled.
 In ....
 \todo[inline]{Why we use \fix{speculative\_spin\_mutex}}
-
