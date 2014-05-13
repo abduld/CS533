@@ -37,7 +37,7 @@ This is a simple pass, since the compiler considers the IR to be in SSA form
 Free variables are ones which are not bound by the current scope.
 This pass computes the set of variables at each statement using
 	the Def/Use information.
-At each program point, $OUT(p) = \cup(In(p))$ and $Out(p) = Out(p) \ Kill(p) \cup Gen(p)$
+At each program point, $OUT(p) = \cup_{e \in pred(p)} In(e)$ and $Out(p) = Out(p) \backslash Kill(p) \cup Gen(p)$
 	where the $Gen$ set are the use set at that point, and the $Kill$ set is the set
  of definitions.
 
