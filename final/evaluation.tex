@@ -2,7 +2,7 @@
 
 To demonstrate the performance and correctness of our ZOne implementation, we
 present three benchmark: convolution, Black-Scholes, European pricing, and histogram.
-While all three befinit greatly from our I/O latency interleaving, we show
+While all three benefit greatly from our I/O latency interleaving, we show
 	that histogram also improves from our compiler optimizations.
 
 
@@ -20,28 +20,28 @@ While all three befinit greatly from our I/O latency interleaving, we show
 Convolutions has wide applications in both engineering and mathematics.
 Depending on the ``kernel'' (or mask), convolution, or stencil as it is sometimes called,  	can be used to approximate a differential operator --- 
  a $[-\frac{1}{h}, 0, \frac{1}{h}]$ kernel approximates the gradient operator, for example.
-High-performance CPU convolution imlpementations
+High-performance CPU convolution implementations
 involve vectorization and tiling to make full use of cache bandwidth and 
 execution resources.
 The biggest impact from a GPU point of view, however, is the use of fast 
 	scratch pad memory as a user managed cache.
-We therefore see little performance benifits from our compiler passes, and the
+We therefore see little performance benefits from our compiler passes, and the
 	performance primarily stems from interleaving memory copies.
 Figure~\ref{fig:stencil} shows the speedup achieved by our runtime for a 1D
 	convolution compared to a naive CUDA implementation.
 
 
 \subsection{Black-Scholes}
-Black-Scholes models option pricing by simplifying ito's formula, and some other stuf....
+Black-Scholes models option pricing by simplifying its formula, and some other stuff....
 
 
-Coarsining increases register preasure, and degrades performance.
+Coarsening increases register pressure, and degrades performance.
 
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/blackscholes.pdf}
-\caption{Speedup over CUDA verion..todo}
+\caption{Speedup over CUDA version..todo}
 \label{fig:blackscholes}
 \centering
 \end{figure}
@@ -52,9 +52,9 @@ Coarsining increases register preasure, and degrades performance.
 
 \subsection{Histogram}
 Histograms are a fundamental analysis tool in image and data processing.
-Efficient serial CPU histogram implementations are very straghtforward, but
-due to the data-dependant access pattern efficient GPU implementations are
-more involved. They typically feature privitization,
+Efficient serial CPU histogram implementations are very straightforward, but
+due to the data-dependent access pattern efficient GPU implementations are
+more involved. They typically feature privatization,
 where individual histograms for portions of the data are computed separately
 and then compiled together into the overall result. This reduces serialization
 of atomic memory accesses when different threads increment the same bin.
@@ -65,7 +65,7 @@ occlusion queries.
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/histogram.pdf}
-\caption{Frames per seconds achieved for histogram equalization kernel on a 4K video. The figure compares the tuned GPU implementation to a naive CPU and tuned CPU implementations. The tuned GPU implementation uses thread coarsining to achieve high fps.}
+\caption{Frames per seconds achieved for histogram equalization kernel on a 4K video. The figure compares the tuned GPU implementation to a naive CPU and tuned CPU implementations. The tuned GPU implementation uses thread coarsening to achieve high fps.}
 \label{fig:histogram}
 \centering
 \end{figure}
@@ -74,7 +74,7 @@ occlusion queries.
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/histogramc.pdf}
-\caption{The coarsining parameter impacts the performance of the histogram equalization kernel.}
+\caption{The coarsening parameter impacts the performance of the histogram equalization kernel.}
 \label{fig:histogramCoarsining}
 \centering
 \end{figure}
