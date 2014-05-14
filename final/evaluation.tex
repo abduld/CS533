@@ -53,6 +53,16 @@ Coarsening increases register pressure, and degrades performance.
 
 \subsection{Binary Image Segmentation}
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{fig/growcut.pdf}
+\caption{This shows the timing of GrowCut on a $24$ and $32$ core system.
+As expected, no difference is noticed between the two configurations due to hitting I/O
+bandwidth limits. The $x$ axis is the number of megapixels in the image and the $y$ axis is the execution time in seconds.}
+\label{fig:growcut}
+\centering
+\end{figure}
+
 Binary image segmentation partitions an image into foreground and background
   pixels.
 GrowCut~\cite{vezhnevets2005growcut} is an algorithm that uses ideas from cellular automaton to perform image
@@ -66,19 +76,14 @@ The algorithm is iterated until either a fixed point is reached or the maximum n
   of iterations are reached.
 A pseudocode of the algorithm is shown bellow:
 
-\begin{figure}
-\centering
-\includegraphics[scale=0.4]{fig/growcut.pdf}
-\caption{TODO TODO TODO}
-\label{fig:growcut}
-\centering
-\end{figure}
 
 \begin{lstlisting}
 Input: Image, Approximate Label
 Output: Label Sgementation
 -----------------------------
-do_wile changes > 0 || iterations < MAX_ITERATIONS:
+changed = true
+do_wile changed || iterations < MAX_ITERATIONS:
+  changed = false
   for ii from 0 to height:
     for jj from 0 to width:
       cp = image[ii][jj]
@@ -93,6 +98,7 @@ do_wile changes > 0 || iterations < MAX_ITERATIONS:
           if gc * sq > sp:
             nl = lq
             ns = sq * gc
+            changed = true
           end
         end
       end
@@ -105,9 +111,15 @@ end
 
 For our experiments, we set \fix{MAX\_ITERATIONS} to $2048$ and use a
   simple weight function $g(x,y)  = 1 - \frac{\|x - y\|}{255}$.
-Using a standard sgementation dataset~\cite{gridcut}, figure~\ref{fig:growcut} shows the
+
+We use this algorithm to show that a platau is reached in terms of scaling.
+Using a standard sgementation dataset~\cite{gridcut}, we modified our runtime so
+  it does not use the GPU and use TBB for threading. figure~\ref{fig:growcut} shows the
   performance on a multicore machine as well as on a GPU as the input
   size varies.
+We see that having $24$ vs $32$ cores does not make a difference for streaming, since
+  one hits the I/O bandwidth limits.
+More advanced I/O configurations, such as RAID, would allow us to scale better as the number of cores become large. 
 
 \subsection{Histogram}
 
