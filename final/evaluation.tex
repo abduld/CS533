@@ -82,7 +82,7 @@ Input: Image, Approximate Label
 Output: Label Sgementation
 -----------------------------
 changed = true
-do_wile changed || iterations < MAX_ITERATIONS:
+do_wile changed && iterations < MAX_ITERATIONS:
   changed = false
   for ii from 0 to height:
     for jj from 0 to width:
@@ -106,6 +106,7 @@ do_wile changed || iterations < MAX_ITERATIONS:
       nextStrength[ii][jj] = ns
     end
   end
+  iterations++
   label = nextLabel
   strength = nextStrength
 end
