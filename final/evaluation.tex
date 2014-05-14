@@ -53,13 +53,13 @@ Coarsening increases register pressure, and degrades performance.
 
 \subsection{Binary Image Segmentation}
 
-Binary image segmentation partitions an image into forground and background
+Binary image segmentation partitions an image into foreground and background
 	pixels.
 We examine the performance of two state of the art algorithms.
 The first is GrowCut\todo[inline]{cite} which uses cellular automaton to flood
 	neighbors based on an initial seed.
 The second uses a graph cut's push-relabel algorithm to find the minimum
-	cut to partition the forground and background pixels.
+	cut to partition the foreground and background pixels.
 
 \subsubsection{GrowCut}
 
@@ -89,12 +89,19 @@ The second uses a graph cut's push-relabel algorithm to find the minimum
 \end{figure}
 
 Histograms are a fundamental analysis tool in image and data processing.
-Efficient serial CPU histogram implementations are very straightforward, but
-due to the data-dependent access pattern efficient GPU implementations are
-more involved. They typically feature privatization,
-where individual histograms for portions of the data are computed separately
-and then compiled together into the overall result. This reduces serialization
-of atomic memory accesses when different threads increment the same bin.
-Other approaches include sorting the input data and then finding the start
-index of each bucket, and approaches that use graphics-specific hardware like
-occlusion queries.
+Although serial  histogram implementations are very straightforward, efficient parallel histogram implementations are
+more involved due to the data-dependent access pattern. 
+Atomic memory operations are typically used to enable potential parallelism for data-dependent stores. 
+Privatization, where individual histograms for portions of the data are computed separately
+and then compiled together into the overall result, may potentially reduce memory contention and then penalty of serialization.
+Also, scan or sort operations on input data can potentially replace atomic memory operations, and achieve the similar functionality.
+
+In this image histogram equalization benchmark, atomic memory operations are specifically applied. 
+Figure \ref{fig:histogram} shows the performance difference among serial CPU, efficient parallel CPU, and efficient parallel GPU versions of image histogram equalization on a 4K video.
+Our GPU image histogram equalization can achieve up to 260.2 fps on a Tesla C2050, while serial and parallel CPU versions only have 39.1 and 120.5 fps, respectively, on a Intel Xeon E5520 CPU.
+Tiling and thread coarsening are the two major optimization involved in this evaulation.
+In the histogram kernel particularly, tiling (baseline in Figure \ref{fig:histogramCoarsining}) is simply applied for further optimization in order to gain memory efficiency.
+Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied for hiding the overhead of kernels and give a 1.78x speedup over the tiling version.
+An aggressive thread coarsening version (aggressive coarsening in Figure \ref{fig:histogramCoarsining}), which involves loop fusion of independent histograms, can further have up to 3.10x over the tiling version.
+
+
