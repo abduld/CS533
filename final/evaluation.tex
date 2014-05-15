@@ -12,7 +12,7 @@ While all three benefit greatly from our I/O latency interleaving, we show
 \centering
 \includegraphics[scale=0.5]{data/stencil.pdf}
 \caption{Speedup of convolution over naive CUDA implementation.
-  The $x$-axis is the convolved vector size in bytes.}
+  The $x$-axis is the convolved vector size in bytes in a log2 scale.}
 \label{fig:stencil}
 \centering
 \end{figure}
@@ -29,27 +29,34 @@ We therefore see little performance benefits from our compiler passes, and the
   performance primarily stems from interleaving memory copies.
 Figure~\ref{fig:stencil} shows the speedup achieved by our runtime for a 1D
   convolution compared to a naive CUDA implementation.
+At small input sizes, the speedup is less than one due to overhead from the
+runtime system. When the data size is large enough($2^{26}$), the benefit of
+overlapping I/O and compute is enough to compensate for the overhead. The
+largest speedup shown is 7.62x. The speedup will flatten out for larger
+input sizes as the program's compute time becomes dominant or the data transfer
+becomes limited by the hardware capabilities.
 
 
-\subsection{Option Pricing}
+\subsection{Black-Scholes Option Pricing}
+Black-Scholes is a simplified differential equation for option pricing that only
+considers neighboring datapoints. All data can be made private to a GPU thread,
+so this program maps onto GPUs with high-performance.
 
-\subsubsection{Black-Scholes}
-Black-Scholes models option pricing by simplifying its formula, and some other stuff....
-
-
-Coarsening increases register pressure, and degrades performance.
-
+Overhead from the runtime causes the speedup to be less than 1x for datasets
+smaller than $2^{22}$ entries. The largest speedup shown is 42.8x for input
+data sizes of $2^{26}$ entries. Like Black-Scholes, the speedup will flatten
+out as the input data sets grow.
 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/blackscholes.pdf}
-\caption{Speedup over CUDA version..todo}
+\caption{Speedup over CUDA implementation of BlackScholes option-pricing
+algorithm. The $x$-axis is the size of the five input datasets in floats with
+a log2 scale.}
 \label{fig:blackscholes}
 \centering
 \end{figure}
 
-
-\subsubsection{European Options}
 
 \subsection{Binary Image Segmentation}
 
@@ -129,7 +136,10 @@ More advanced I/O configurations, such as RAID, would allow us to scale better a
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/histogram.pdf}
-\caption{Frames per seconds achieved for histogram equalization kernel on a 4K video. The figure compares the tuned GPU implementation to a naive CPU and tuned CPU implementations. The tuned GPU implementation uses thread coarsening to achieve high fps.}
+\caption{Frames per second achieved for histogram equalization kernel on a 4K
+video. The figure compares the parallel GPU implementation to a serial CPU and
+parallel CPU implementations. The parallel GPU implementation uses thread
+coarsening to achieve high fps.}
 \label{fig:histogram}
 \centering
 \end{figure}
@@ -138,7 +148,7 @@ More advanced I/O configurations, such as RAID, would allow us to scale better a
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/histogramc.pdf}
-\caption{The coarsening parameter impacts the performance of the histogram equalization kernel.}
+\caption{The coarsening level impacts the performance of the histogram equalization kernel.}
 \label{fig:histogramCoarsining}
 \centering
 \end{figure}
@@ -158,5 +168,3 @@ Tiling and thread coarsening are the two major optimization involved in this eva
 In the histogram kernel particularly, tiling (baseline in Figure \ref{fig:histogramCoarsining}) is simply applied for further optimization in order to gain memory efficiency.
 Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied for hiding the overhead of kernels and give a 1.78x speedup over the tiling version.
 An aggressive thread coarsening version (aggressive coarsening in Figure \ref{fig:histogramCoarsining}), which involves loop fusion of independent histograms, can further have up to 3.10x over the tiling version.
-
-

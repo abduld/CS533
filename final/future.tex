@@ -4,8 +4,6 @@ While ZOne demonstrates some important features of an effective parallel
 programming environment, there is plenty of opportunity to improve the
 applicability and efficiency of the code generation.
 
-\subsection{Runtime}
-
 Support for OpenCL, a heterogeneous computing framework for writing programs
 that run
 on CPUs, GPUs, DSPs, FPGAs, and other available computing resources, would be a
@@ -14,14 +12,14 @@ capabilities, so many of the CUDA constructs that ZOne can
 generate code for can easily be retargeted to OpenCL to allow ZOne to generate
 efficient code for devices that are not NVIDIA GPUs. 
 
-\subsection{Compiler}
-
 It is worth mentioning that our aim was not to write an optimized
 compiler (the compiler can be very slow), our aim was to have a compiler
 that can generate optimized code. To that end, we have written the
 compiler in Dart (a Javascript inspired language) that currently
 generates sequential Javascript and threaded CUDA code from our language.
-The Javascript
-generation is primarily meant for debugging purposes.
-
-\todo[inline]{finish}
+The Javascript generation is primarily meant for debugging purposes.
+A robust compiler would require more optimizations passes, such as data layout
+transformation and vectorization. The compiler built for this project is only
+complicated enough to show that high-level languages can be mapped onto the
+runtime - a useful compiler would have to be extended with more advanced
+optimization passes.
