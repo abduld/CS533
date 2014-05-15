@@ -1,25 +1,27 @@
 \section{Prior Work}
 
-As it pretains to prior work within the IMPACF group,
-	the memory management is one that has some presidence.
-Prior work was primarily concerned with either memory mamangemenet
-	or hiding implementation details.
+Prior work in the IMPACT research group provided insight about memory
+management and hiding implementation details.
 
 In~\cite{gmac} the authors hide CPU
 	to GPU copy latency and unifying the 
 	address space (from the programmer's point of view)
-	of GPU and CPU devices.
+	of GPU and CPU devices. 
 Our work extends this by also managing file I/O and thus
 	unifying disk, CPU, and GPU memory.
 
-In Triolet\cite{rodrigues2014triolet}, a programming interface and system for
-distributed-memory clusters was implemented. Triolet is able to handle
+The industry as a whole is also moving in this direction, with CUDA 5 providing
+a software view of unified memory and AMD's HSA providing true unified memory
+for APUs.
+
+Triolet\cite{rodrigues2014triolet} is a programming interface and system for
+distributed-memory clusters. Triolet is able to handle
 task decomposition, scheduling, and communication from the algorithmic skeleton description. Using algorithmic skeletons Triolet is able to capture parallel
 computation patterns and abstract away the details of the implementation.
 Triolet presents the programmer with higher-order functions through which
 expressed parallelism is automatically distributed across a cluster.
 
 While both projects were done in the IMPACT group, this work does
-	not borry any code other than some discussions with senior memembers
-	and understanding of some of the challenges to overcome.
+	not borrow any code from any other project. It did benefit from some
+discussions with senior IMPACT members, who provided insight into the challenges to overcome.
 In the next section we describe related work outside the IMPACT group.
