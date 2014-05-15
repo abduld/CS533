@@ -1,3 +1,19 @@
 \begin{abstract}
-\todo[inline]{add abstract.}
+The proliferation of GPUs into compute-heavy tasks has begun to extend to
+big-data analytics. This places more emphasis on a new GPU-programming
+difficulty - getting data onto the GPU in a way that does not adversely impact
+performance.
+
+We present a novel asychronous runtime that builds on prior work by providing a unified
+view of disk, GPU, and GPU memory. The runtime also automatically analyzes
+data and compute dependencies to optimize the schedule of I/O and compute
+overlap. THis provides a simplified programming interface and can improve
+performance.
+
+We also present a new high-level language, ZOne. The ZOne compiler targets
+our asynchronous runtime and demonstrates some optimizations that can be done
+on high-level languages to achieve performant code. We demonstrate that 
+combining ZOne and the
+asynchronous runtime can improve performance over naive CUDA code by 4x in some
+benchmarks.
 \end{abstract}
