@@ -19,7 +19,7 @@ Note that this assumption is not valid for generated
 	JavaScript code, but if high-performance JavaScript is needed
         some optimizations
 	can be delegated to offline JavaScript optimizers such as the
-	Google Closure\cite{bolin2010closure} compiler.
+	Google Closure~\cite{bolin2010closure} compiler.
 
 
 \subsubsubsection{Peephole Optimization}
@@ -67,7 +67,7 @@ In this work, we focus on only simple lambda functions, which contain only a few
 Only the coarse sharing pattern, which means one sharing pattern per array per lambda function, is generated.
 All memory accesses associated one array in a lambda function are merged to its coarse sharing pattern.
 
-Our sharing pattern analysis is similar to array reference-based analysis \cite{alg_reference}.
+Our sharing pattern analysis is similar to array reference-based analysis~\cite{alg_reference}.
 However, our analysis is simplified because the feature of map operation in our language.
 Therefore, instead of recording all array reference in all iterations, we only record reference in a subset of iterations, which get referenced, 
 since we know all iterations of map are independent. 
@@ -82,7 +82,7 @@ into \fix{map(f.g, lst)} where \fix{f.g} is the composition of
 \fix{f} and \fix{g}. A simple peephole optimizer can scan for this
 instruction pattern and perform this transformation. A generalization of
 this technique for other list primitives is found in the the Haskell
-vector library. Using a concept called Stream Fusion\cite{StreamFusion}, Haskell
+vector library. Using a concept called Stream Fusion~\cite{StreamFusion}, Haskell
 fuses most function loops to remove unnecessary temporaries and list
 traversals. In this project, adopt some aspects of how Haskell
 performs this transformation when they are applicable in the CUDA
@@ -112,7 +112,7 @@ automatic tiling will be considered as group of several single functions
 limit the data dependency among different outputs, an analysis can be done for
 \fix{f} to track data sharing among multiple outputs. Here,
 sharing analysis is considered as access pattern analysis of function
-\texttt{f}. Therefore, tiling for data sharing is achievable.
+\fix{f}. Therefore, tiling for data sharing is achievable.
 
 Coalesced access of GPU memory is also important for performance. In this
 project coalesced access is considered as a specialized type of
@@ -126,5 +126,5 @@ One of the advantages of compiling from a high-level languages into CUDA
 is that parameters for loop tiling, unrolling, and fusion can easily be tweaked.
 A combination of a resource model and autotuning can be used to
 maximize the performance of the generated code. A brute-force-like
-algorithm similar to the one employed by ATLAS\cite{atlas} can be used to
+algorithm similar to the one employed by ATLAS~\cite{atlas} can be used to
 explore the parameter space.

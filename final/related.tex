@@ -4,7 +4,7 @@ This work that is related to our project emphasizes expression of
 data-parallelism through higher-order functions and high-level languages. In
 this section, we present a selection of related works.
 
-DryadLINQ\cite{yu2008dryadlinq} is a high-level language for data-parallel
+DryadLINQ~\cite{yu2008dryadlinq} is a high-level language for data-parallel
 computing. It is designed to handle batch operations on large-scale
 distributed systems. It combines strongly-typed .NET objects,
 general-purpose declarative and imperative statements, and LINQ expressions
@@ -12,11 +12,11 @@ into a sequential program that can be debugged with a standard .NET debugger.
 The DryadLINQ system automatically transforms the data-parallel portions of the
 program into a distributed execution plan.
 
-Thrust\cite{thrust} is a parallel algorithms library for C++ resembling the C++
+Thrust~\cite{thrust} is a parallel algorithms library for C++ resembling the C++
 standard library. Thrust code can use CUDA, Intel TBB, or OpenMP as a final
 target to enable high performance across a variety of systems.
 
-Copperhead\cite{copperhead} is a data-parallel version of a subset of Python
+Copperhead~\cite{copperhead} is a data-parallel version of a subset of Python
 that is
 interoperable with traditional Python code and Numpy. Copperhead can use CUDA,
 Intel TBB, and OpenMP to accelerate operations. The Copperhead runtime
@@ -24,23 +24,23 @@ intercepts annotated function calls and transforms them (and their input data)
 to the appropriate
 CUDA, OpenMP, or TBB constructs before executing them.
 
-Accelerate\cite{accelerate} is an embedded array language in Haskell for 
+Accelerate~\cite{accelerate} is an embedded array language in Haskell for 
 high-performance
 computing. It allows computations on multi-dimensional arrays to be expressed
 through collective higher-order operations such as maps or reductions. It has
 a CUDA and OpenCL backend.
 
-NOVA\cite{collins2013nova} is a data-parallel polymorphic, statically-typed
+NOVA~\cite{collins2013nova} is a data-parallel polymorphic, statically-typed
 functional language. Parallelism is expressed through higher-order functions
 such as scan, reduce, map, permute, gather, slice, and filter. NOVA has a
 squential/parallel C backend, and a CUDA backend.
 
-Adaptive Implementation Selection in SkePU\cite{enmyren2010skepu} is a C++ template library for data-parallel
+Adaptive Implementation Selection in SkePU~\cite{enmyren2010skepu} is a C++ template library for data-parallel
 computations on one or more GPUs through CUDA or OpenCL. SkePU programs are
 expressed through skeletons derived from higher-order functions. Notably,
 SkePU also implements lazy memory copying to avoid unecessary memory transfers.
 
-GPU MapReduce (GPMR)\cite{stuart2011multi} is a  MapReduce library written
+GPU MapReduce (GPMR)~\cite{stuart2011multi} is a  MapReduce library written
 for multi-GPU clusters. GPMR programs are expressed through the map and reduce
 higher-order functions. GPMR breaks these programs up into a map stage, a sort stage, and a reduce stage, then uses optimizations that reduce communication at
 the expense of computation, which is a tradeoff that is well-suited for GPUs.

@@ -1,10 +1,10 @@
-\subsubsection{Parser}
+%\subsubsection{Parser}
 
 Using parser combinators, we are able to simplify the definition of 
 	the language (compared to traditional \fix{LR(1)} parsers).
 The parser is expressed within dart through a Dart library and
 	the parser and lexer are in the same file (as compared to two
-	files as traditionally used by \fix{lex/yacc}).
+	files as traditionally used by \fix{lex/yacc}~\cite{lexyacc}).
 The library also provides convenient primitives, such as a definition of
 	a floating point numbers, to simplify our definition.
 Furthermore, it provides utility functions to declare common patterns
@@ -14,8 +14,8 @@ To express function parameters, for example, first define how one function
 
 \begin{verbatim}
 param() =>
-	identifier + typeIdentifier ^
-		(id, type) => new ParameterNode(id, type); 
+    identifier + typeIdentifier ^
+        (id, type) => new ParameterNode(id, type); 
 \end{verbatim}
 
 Then, we use the built-in utility function \fix{sepBy}, \fix{parens},

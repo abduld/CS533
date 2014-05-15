@@ -1,21 +1,23 @@
 \begin{abstract}
-The proliferation of GPUs in compute-heavy tasks has begun to extend to
-big-data analytics. This places more emphasis on a new GPU-programming
-difficulty - getting data onto the GPU in a way that does not adversely impact
-performance.
 
-We present a novel asychronous runtime, ZOne, that builds on prior work by
+The advent of big data introduces new challenges for GPU computing.
+Data, which can no longer be assumed to reside in memory, now must 
+	be read from disk.
+Furthermore, since data cannot fit into memory, it cannot be copied
+	(as a whole) to the GPU.
+Data movement is the main bottle neck in GPU computing, since data copies dominate the program runtime.
+
+We first present a novel asynchronous runtime, ZOne, that builds on prior work by
 providing a unified
 view of disk, GPU, and GPU memory. The runtime maintains
 data and compute dependencies to optimize the schedule of I/O and compute
-overlap. This provides a simplified programming interface and can further
-improve performance.
+copies. To hide latency, it is able to interleave independent operations --- such read from disk and copy to GPU. By providing a simplified programming model, we can improve both programmability 
+and performance.
 
-We also present a new high-level language and compiler. The compiler targets
-our asynchronous runtime and demonstrates some optimizations that can be done
-on high-level languages to achieve performant code. We demonstrate that 
-combining the language and asynchronous runtime can improve performance over
-CUDA code with basic data transfer management by up to 8x on a machine with an
-Intel Core i7-2820 and Nvidia Fermi Quadro 5010M.
+We also present a new high-level language and compiler.
+The compiler targets
+our asynchronous runtime by determining the dependencies in the code.The compiler demonstrates that optimizations can be done
+on high-level languages to transform it to performant code.
+We demonstrate up to $8\times$ speedup over CUDA code with simple data transfer management (on an Intel Core i7-2820 and Nvidia Fermi Quadro 5010M) by combining the language and runtime.
 
 \end{abstract}

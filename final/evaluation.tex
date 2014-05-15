@@ -1,10 +1,57 @@
 \section{Evaluation}
 
 To demonstrate the performance and correctness of our ZOne implementation, we
-present three benchmark: convolution, binary image segmentation, Black-Scholes
+present three benchmark: binary image segmentation, convolution, Black-Scholes
 option pricing, and histogram.
-While all three benefit greatly from our I/O latency interleaving, we show
-  that histogram also improves from our compiler optimizations.
+While all benefit greatly from our I/O latency interleaving, we show
+  that segmentation improves from insight into the problem while histogram also improves from our compiler optimizations.
+
+
+\subsection{Binary Image Segmentation}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{fig/growcut.pdf}
+\caption{This shows the timing of GrowCut on a $24$ and $32$ core system.
+As expected, no difference is noticed between the two configurations due to hitting I/O
+bandwidth limits. The $x$ axis is the number of megapixels in the image and the $y$ axis is the execution time in seconds. It also shows the effects of different GPU optimizations on time.}
+\label{fig:growcut}
+\centering
+\end{figure}
+
+Binary image segmentation partitions an image into foreground and background
+  pixels.
+GrowCut~\cite{vezhnevets2005growcut} is an algorithm that uses ideas from cellular automaton to perform image
+  segmentation.
+GrowCut flood
+  neighbors based on an initial seed until it reaches a barrier.
+One can think of each pixel as a bacteria with an energy function, if a bacteria has
+  higher energy than one of its neighbors, then it will devour them --- otherwise it
+  is the victim.
+The algorithm is iterated until either a fixed point is reached or the maximum number
+  of iterations are reached.
+A pseudocode of the algorithm is shown in listing~\ref{lst:growcut}.
+For our experiments, we set \fix{MAX\_ITERATIONS} to $2048$ and use a
+  penalty function $g(x,y)  = 1 - \|x - y\|_2$.
+
+We use this algorithm to show that a plateau is reached in terms of scaling.
+Using a standard segmentation dataset~\cite{gridcut}, we modified our runtime so
+  it does not use the GPU and use TBB for threading. Figure~\ref{fig:growcut} shows the
+  performance on a multicore machine as well as on a GPU as the input
+  size varies.
+We see that having $24$ core (Intel Xeon X5660) vs $32$ core (Intel Xeon X5675) does not make a difference for streaming, since
+  one hits the I/O bandwidth limits.
+More advanced I/O configurations, such as RAID, would allow us to scale better as the number of cores become large.
+
+Figure~\ref{fig:growcut} shows the effects of different GPU optimizations on a C2070 GPU.
+The GPU base version performs the computation using an $8 \times 8$ work group.
+The GPU shared version places the $label$, $strength$, and $image$ data into 
+  shared memory before performing the computation.
+Since error can be tolerated, the GPU $\sim$Hypot version approximates
+  the $2$-norm using the  ``$\alpha$-max plus $\beta$-min algorithm'' with
+  $\alpha = 1$ and $\beta = 1/2$.
+The final version, GPU Approx, introduces more error by performing multiple iterations without doing a global synchronization.
+This shows that beyond program tuning for hardware, one can exploit the error tolerance for this class of algorithms to achieve great speedup.
 
 
 \subsection{Convolution}
@@ -13,7 +60,7 @@ While all three benefit greatly from our I/O latency interleaving, we show
 \centering
 \includegraphics[scale=0.5]{data/stencil.pdf}
 \caption{Speedup of convolution over naive CUDA implementation.
-  The $x$-axis is the convolved vector size in bytes in a log2 scale.}
+  The $x$-axis is the convolved vector size in bytes in a $log2$ scale.}
 \label{fig:stencil}
 \centering
 \end{figure}
@@ -29,22 +76,23 @@ The biggest impact from a GPU point of view, however, is the use of fast
 We therefore see little performance benefits from our compiler passes, and the
   performance primarily stems from interleaving memory copies.
 Figure~\ref{fig:stencil} shows the speedup achieved by our runtime for a 1D
-  convolution compared to a naive CUDA implementation.
+  convolution compared to a base CUDA implementation on Intel Core i7-2820 and Nvidia Fermi Quadro 5010M.
 At small input sizes, the speedup is less than one due to overhead from the
 runtime system. When the data size is large enough($2^{26}$), the benefit of
 overlapping I/O and compute is enough to compensate for the overhead. The
-largest speedup shown is 7.62x. The speedup will flatten out for larger
+largest speedup shown is $7.62\times$. The speedup will flatten out for larger
 input sizes as the program's compute time becomes dominant or the data transfer
 becomes limited by the hardware capabilities.
 
 
 \subsection{Black-Scholes Option Pricing}
-Black-Scholes is a simplified differential equation for option pricing that only
+Black-Scholes is a closed form analytic differential
+  equation for option pricing that only
 considers neighboring datapoints. All data can be made private to a GPU thread,
 so this program maps onto GPUs with high-performance.
 
-Overhead from the runtime causes the speedup to be less than 1x for datasets
-smaller than $2^{22}$ entries. The largest speedup shown is 42.8x for input
+In Figure~\ref{fig:blackscholes}, overhead from the runtime causes the speedup to be less than 1x for datasets
+smaller than $2^{22}$ entries. The largest speedup shown is $42.8\times$ for input
 data sizes of $2^{26}$ entries. Like Black-Scholes, the speedup will flatten
 out as the input data sets grow.
 
@@ -53,84 +101,12 @@ out as the input data sets grow.
 \includegraphics[scale=0.5]{data/blackscholes.pdf}
 \caption{Speedup over CUDA implementation of BlackScholes option-pricing
 algorithm. The $x$-axis is the size of the five input datasets in floats with
-a log2 scale.}
+a $log2$ scale.}
 \label{fig:blackscholes}
 \centering
 \end{figure}
 
-
-\subsection{Binary Image Segmentation}
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.4]{fig/growcut.pdf}
-\caption{This shows the timing of GrowCut on a $24$ and $32$ core system.
-As expected, no difference is noticed between the two configurations due to hitting I/O
-bandwidth limits. The $x$ axis is the number of megapixels in the image and the $y$ axis is the execution time in seconds.}
-\label{fig:growcut}
-\centering
-\end{figure}
-
-Binary image segmentation partitions an image into foreground and background
-  pixels.
-GrowCut~\cite{vezhnevets2005growcut} is an algorithm that uses ideas from cellular automaton to perform image
-  sgementation.
-GrowCut flood
-  neighbors based on an initial seed until it reaches a barrier.
-One can think of each pixel as a bacteria with an energy function, if a bacteria has
-  higher energy than one of its neighbors, then it will devour them --- otherwise it
-  is the victim.
-The algorithm is iterated until either a fixed point is reached or the maximum number
-  of iterations are reached.
-A pseudocode of the algorithm is shown bellow:
-
-
-\begin{lstlisting}
-Input: Image, Approximate Label
-Output: Label Sgementation
------------------------------
-changed = true
-do_wile changed && iterations < MAX_ITERATIONS:
-  changed = false
-  for ii from 0 to height:
-    for jj from 0 to width:
-      cp = image[ii][jj]
-      nl = lp = label[ii][jj]
-      ns = sp = strength[ii][jj]
-      for ni from -1 to 1:
-        for nj from -1 to 1:
-          cq = image[ii+ni][jj+nj]
-          lq = label[ii+ni][jj+nj]
-          sq = strength[ii+ni][jj+nj]
-          gc = g(cp, cq)
-          if gc * sq > sp:
-            nl = lq
-            ns = sq * gc
-            changed = true
-          end
-        end
-      end
-      nextLabel[ii][jj] = nl
-      nextStrength[ii][jj] = ns
-    end
-  end
-  iterations++
-  label = nextLabel
-  strength = nextStrength
-end
-\end{lstlisting}
-
-For our experiments, we set \fix{MAX\_ITERATIONS} to $2048$ and use a
-  simple penatly function $g(x,y)  = 1 - \frac{\|x - y\|}{255}$.
-
-We use this algorithm to show that a platau is reached in terms of scaling.
-Using a standard sgementation dataset~\cite{gridcut}, we modified our runtime so
-  it does not use the GPU and use TBB for threading. Figure~\ref{fig:growcut} shows the
-  performance on a multicore machine as well as on a GPU as the input
-  size varies.
-We see that having $24$ vs $32$ cores does not make a difference for streaming, since
-  one hits the I/O bandwidth limits.
-More advanced I/O configurations, such as RAID, would allow us to scale better as the number of cores become large. 
+ 
 
 \subsection{Histogram}
 
@@ -140,7 +116,7 @@ More advanced I/O configurations, such as RAID, would allow us to scale better a
 \caption{Frames per second achieved for histogram equalization kernel on a 4K
 video. The figure compares the parallel GPU implementation to a serial CPU and
 parallel CPU implementations. The parallel GPU implementation uses thread
-coarsening to achieve high fps.}
+coarsening to achieve high $fps$.}
 \label{fig:histogram}
 \centering
 \end{figure}
@@ -149,7 +125,7 @@ coarsening to achieve high fps.}
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{data/histogramc.pdf}
-\caption{The coarsening level impacts the performance of the histogram equalization kernel.}
+\caption{The coarsening level impacts the performance of the histogram kernel on the GPU.}
 \label{fig:histogramCoarsining}
 \centering
 \end{figure}
@@ -165,10 +141,10 @@ Also, scan or sort operations on input data can potentially replace atomic memor
 In this image histogram equalization benchmark, atomic memory operations are specifically applied. 
 Figure \ref{fig:histogram} shows the performance difference among serial CPU, 
 parallel CPU, and parallel GPU versions of image histogram equalization on a 4K video.
-Our GPU image histogram equalization can achieve up to 260.2 fps on a Tesla C2050, while serial and parallel CPU versions only have 39.1 and 120.5 fps, respectively, on a Intel Xeon E5520 CPU.
-Tiling and thread coarsening are the two major optimization involved in this evaulation.
+Our GPU image histogram equalization can achieve up to $260.2 fps$ on a Tesla C2050, while serial and parallel CPU versions only have 39.1 and $120.5 fps$, respectively, on a Intel Xeon E5520 CPU.
+Tiling and thread coarsening are the two major optimization involved in this evaluation.
 In the histogram kernel specifically, tiling (baseline in Figure 
 \ref{fig:histogramCoarsining}) is simply applied for further optimization in
 order to gain memory efficiency.
-Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied to hide the overhead of kernels and give a 1.78x speedup over the tiling version.
-An aggressive thread coarsening version (aggressive coarsening in Figure \ref{fig:histogramCoarsining}), which involves loop fusion of independent histograms, can further have up to 3.10x over the tiling version.
+Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied to hide the overhead of kernels and give a $1.78\times$ speedup over the tiling version.
+An aggressive thread coarsening version (aggressive coarsening in Figure \ref{fig:histogramCoarsining}), which involves loop fusion of independent histograms, can further have up to $3.10\times$ over the tiling version.

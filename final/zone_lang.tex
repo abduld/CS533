@@ -1,11 +1,11 @@
-\subsubsection{The Zone Language}
-\label{sec:zonelang}
+%\subsubsection{The Zone Language}
+%\label{sec:zonelang}
 
 Our statically typed language is inspired by array and data flow
-programming languages such as Fortran\cite{Fortran}, APL\cite{APL}, and
-LINQ\cite{LINQ} where one expresses computation based on operations on
+programming languages such as Fortran~\cite{Fortran}, APL~\cite{APL}, and
+LINQ~\cite{LINQ} where one expresses computation based on operations on
 vectors and arrays. In our language, one can define two vectors of size
-\texttt{100} by
+\fix{100} by
 
 \begin{verbatim}
 n :: Integer = 1000;
@@ -16,21 +16,21 @@ bs :: []Real = rand.Real(n);
 
 The syntactic style for ZOne is borrowed from a other languages
 	which we think have good syntax representations.
-The type declaration position was browed from Go\cite{golang},
-	the function declarations from Dart\cite{dartlang},
-	the type notation from Julia\cite{julialang},
-	and the semantics from array languages such as Fortran\cite{Fortran} or APL\cite{APL}.
+The type declaration position was browed from Go~\cite{golang},
+	the function declarations from Dart~\cite{dartlang},
+	the type notation from Julia~\cite{julialang},
+	and the semantics from array languages such as Fortran~\cite{Fortran} or APL~\cite{APL}.
 The result is a unique language that is applicable to wide array
 	of applications.
 
 
 
 To give you a taste of the language, in this program we approximate
-\texttt{pi} using Monte Carlo integration
+\fix{pi} using Monte Carlo integration
 
 \begin{verbatim}
 def f(a :: Real, b :: Real) :: Bool {
-	return a*a + b*b < 1;
+    return a*a + b*b < 1;
 }
 res :: Integer = zip(as, bs).count(f) / n;
 \end{verbatim}

@@ -3,8 +3,7 @@
 By design, CUDA device kernels execute asycnhronously with respect to the
 host code. This allows host code to overlap with device code, but does not
 allow different device operations (kernels and data transfers) to execute
-concurrently. CUDA exposes device concurrency through \textit{CUDA Streams}
-\cite{kirk2012programming}.
+concurrently. CUDA exposes device concurrency through CUDA Streams~\cite{kirk2012programming}.
 
 A CUDA Stream is a sequence of operations that
 execute in-order on a CUDA device. Separate streams may be interleaved or
@@ -16,7 +15,7 @@ CPU to determine the execution status and progress of different streams.
 
 The flexibility of CUDA streams is limited by the device hardware.
 For example, the Fermi architecture can manage one queue of kernels, one queue
-of device$\rightarrow$host transfers, and one queue of host$\rightarrow$device
+of device-to-host transfers, and one queue of host-to-device
 transfers. Stream
 dependencies between queues are maintained, but there are no dependencies
 within queues - the operations are simply done in the order they are put into
