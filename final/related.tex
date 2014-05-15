@@ -13,13 +13,6 @@ The DryadLINQ system automatically transforms the data-parallel portions of the
 program into a distributed execution plan.
 % TODO: more to write?
 
-Triolet\cite{rodrigues2014triolet} is a programming interface and system for
-distributed-memory clusters that handles task decomposition, scheduling, and
-communication. Triolet emphasizes algorithmic skeletons to capture parallel
-computation patterns and abstract away the details of the implementation.
-Triolet presents the programmer with higher-order functions through which
-expressed parallelism is automatically distributed across a cluster.
-
 Thrust\cite{thrust} is a parallel algorithms library for C++ resembling the C++
 standard library. Thrust code can use CUDA, Intel TBB, or OpenMP as a final
 target to enable high performance across a variety of systems.
