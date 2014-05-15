@@ -14,11 +14,9 @@ This avoids us having to write logic to parse the file.
 Both of these limitations manifest themselves because we did not want to
 	write a generic file format or file importer, since this is a problem
 	orthogonal to this project.
-In the future, one can use file formats,
-	such as HDF~\cite{folk2011overview}, to circumvent these implementation
-	limitations.
+In the future, file formats such as HDF~\cite{folk2011overview} could be used
+to circumvent these implementation limitations.
 
-In cases requiring one to parse a file to extract its data into
-	C datatypes, we expect to see more performance
-	improvement (over a baseline implementation) since we can perform
-	this parsing in parallel.
+The current file form limitation actually provides a performance benefit, since
+presently files can be parsed in parallel.
+

@@ -24,7 +24,7 @@ Note that this assumption is not valid for generated
 
 \subsubsubsection{Peephole Optimization}
 
-When lowering the AST to IR, many temporary variables are generated.
+Many temporary variables are generated when the AST is lowered into the IR.
 They are removed through a peephole optimizer that has removal of
 	temporary variables as a pattern.
 
@@ -84,20 +84,20 @@ instruction pattern and perform this transformation. A generalization of
 this technique for other list primitives is found in the the Haskell
 vector library. Using a concept called Stream Fusion\cite{StreamFusion}, Haskell
 fuses most function loops to remove unnecessary temporaries and list
-traversals. In this project, we will adopt some aspects of how Haskell
+traversals. In this project, adopt some aspects of how Haskell
 performs this transformation when they are applicable in the CUDA
-programming model --- since GPU programs tend to be memory bound,
-reducing the number of temporaries increases performance, for example.
+programming model. For example, GPU programs tend to be memory bound so
+reducing the number of temporaries increases performance.
 
 In order to achieve high-performance fusion, a resource estimator and a
-memory counter are necessary. The resource estimator monitor on-chip
+memory counter are necessary. The resource estimator monitors on-chip
 resource usage for a current tiling to avoid register spilling and drop
 of multithreading. The memory counter calculates the potential
 memory count saved by fusion. Since 1) the on-chip resources of the GPU are
 limited, and 2) the performance gap between on-chip access and off-chip
-access on GPU might has less impact than the gap between on-node access
-and inter-node access on cluster, the decision of fusion may not be
-trivial. Here, we will use a heuristic function of these two parameters to
+access on GPU might have less impact than the gap between on-node access
+and inter-node access on a cluster, the decision of whether to fuse is not
+trivial. We will use a heuristic function of these two parameters to
 determine the whether to fuse. A precise resource estimator might be
 very difficult to implement and may not really match the real vendor
 compiler. In this project, we will simply build a routine to rely on the
@@ -106,25 +106,25 @@ code.
 
 \subsubsection{Loop Tiling}\label{loop-tiling}
 
-Tiling is critical for performant on GPU programs. In this project,
-automatic tiling will be considered as group several single functions
-\fix{f}. Considering a function \fix{f} is isolated and map constructs limit
-data dependency among different outputs, an analysis can be done for
-fix{f} to track data sharing among multiple outputs. Here,
+Tiling is critical for performant GPU programs. In this project,
+automatic tiling will be considered as group of several single functions
+\fix{f}. Considering a function \fix{f} is isolated and that map constructs
+limit the data dependency among different outputs, an analysis can be done for
+\fix{f} to track data sharing among multiple outputs. Here,
 sharing analysis is considered as access pattern analysis of function
 \texttt{f}. Therefore, tiling for data sharing is achievable.
 
-Coalesced access of GPU is also important for performance. In this
-project coalesced access is easily considered as a specialized type of
+Coalesced access of GPU memory is also important for performance. In this
+project coalesced access is considered as a specialized type of
 tiling. Register packing and thread coarsening of GPU are also
 recognized by applying the same analysis, with different tiling.
 Therefore, we can potentially perform very aggressive tiling for GPU.
 
 \subsubsection{Autotuning}\label{autotuning}
 
-One of the advantages of compiling from a high level languages into CUDA
-is that you can easily tweak parameters for loop tiling, unrolling, and
-fusion. A combination of a resource model and autotuning will be used to
-maximize the performance of the generated code. We will use a brute-force-like
-algorithm, similar to the one employed by ATLAS\cite{atlas} to explore the
-parameter space.
+One of the advantages of compiling from a high-level languages into CUDA
+is that parameters for loop tiling, unrolling, and fusion can easily be tweaked.
+A combination of a resource model and autotuning can be used to
+maximize the performance of the generated code. A brute-force-like
+algorithm similar to the one employed by ATLAS\cite{atlas} can be used to
+explore the parameter space.

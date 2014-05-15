@@ -1,13 +1,12 @@
 \subsubsection{Compiler Limitations}
 
-For this project, effort was taken to have as many features as possible.
-In the case of the parser, for example, Parsing errors will manifest
-  themselves as runtime exceptions in the parsing code and would not
+Parsing errors will manifest
+  themselves as runtime exceptions in the parsing code and do not
   generate human readable syntax errors.
-In the case of the type system, while required by our language sytax,
-  is not enforced by the IR --- it's just propagated.
-It is only at the backend level that types are used to generate the appropriate
-  variable definitions and/or function calls.
-Finally, a lot of functionality (such as branches and most standard math functions)
-  are not supported either because our test cases do not require them, they would
-  complicate the code base, or they are trivial to add.
+Though the type system is required by our language sytax 
+  is not enforced by the IR, it is just propagated.
+It is only at the back end level that types are used to generate the
+appropriate   variable definitions and/or function calls.
+Finally, a lot of functionality (such as branches and most standard math 
+functions) are not supported either because our test cases do not require 
+them, and they would complicate the code base.

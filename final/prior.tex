@@ -3,20 +3,21 @@
 Prior work in the IMPACT research group provided insight about memory
 management and hiding implementation details.
 
-In~\cite{gmac} the authors hide CPU
-	to GPU copy latency and unifying the 
+In GMAC\cite{gmac} the authors hide CPU
+	to GPU copy latency and unify the 
 	address space (from the programmer's point of view)
 	of GPU and CPU devices. 
 Our work extends this by also managing file I/O and thus
 	unifying disk, CPU, and GPU memory.
 
 The industry as a whole is also moving in this direction, with CUDA 5 providing
-a software view of unified memory and AMD's HSA providing true unified memory
-for APUs.
+a unified virtual address space and AMD's HSA providing true unified
+memory for APUs.
 
 Triolet\cite{rodrigues2014triolet} is a programming interface and system for
 distributed-memory clusters. Triolet is able to handle
-task decomposition, scheduling, and communication from the algorithmic skeleton description. Using algorithmic skeletons Triolet is able to capture parallel
+task decomposition, scheduling, and communication from a program description
+that uses algorithmic skeletons. Triolet is able to capture parallel
 computation patterns and abstract away the details of the implementation.
 Triolet presents the programmer with higher-order functions through which
 expressed parallelism is automatically distributed across a cluster.

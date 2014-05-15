@@ -29,7 +29,7 @@ This abstraction will eases adding support for other languages, such
 	as OpenCL, without changing the code generator.
 
 To eagerly copy memory to the GPU, we use logic similar to what is
-	shown in figure~\ref{fig:memorygroup}.
+	shown in Figure~\ref{fig:memorygroup}.
 In (1), we concurrently alloate CPU memory and GPU memory.
 The file is then opened in (2) and different chunks are read into
 	the CPU memory one it's been allocated (we \fix{mmap} the file
@@ -40,5 +40,4 @@ Once a chunk of data is read and the GPU memory has been allocated, data
 Note that while we have an abstracted view of chunks of memory
 	(defined by the datatype \fix{zMemory\_t}), memory is in fact
 	contiguious and placed in a \fix{zMemoryGroup\_t} object.
-This makes it possible to free memory efficiently, and, althought
-	not presently implemented, allows us to resize the chunks.
+This makes it possible to resize (unimplemented) and free memory efficiently.

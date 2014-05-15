@@ -20,7 +20,7 @@ of device$\rightarrow$host transfers, and one queue of host$\rightarrow$device
 transfers. Stream
 dependencies between queues are maintained, but there are no dependencies
 within queues - the operations are simply done in the order they are put into
-the queue. This allows overlap of data transfer and compute on Fermi GPUs.
+the queue.
 On devices that support more than one concurrent compute operation the amount
 of concurrency is limited by the execution resources on the device. If both
 operations are too large to run concurrently they will be serialized.

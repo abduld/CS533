@@ -1,7 +1,8 @@
 \section{Evaluation}
 
 To demonstrate the performance and correctness of our ZOne implementation, we
-present three benchmark: convolution, Black-Scholes, European pricing, and histogram.
+present three benchmark: convolution, binary image segmentation, Black-Scholes
+option pricing, and histogram.
 While all three benefit greatly from our I/O latency interleaving, we show
   that histogram also improves from our compiler optimizations.
 
@@ -124,7 +125,7 @@ For our experiments, we set \fix{MAX\_ITERATIONS} to $2048$ and use a
 
 We use this algorithm to show that a platau is reached in terms of scaling.
 Using a standard sgementation dataset~\cite{gridcut}, we modified our runtime so
-  it does not use the GPU and use TBB for threading. figure~\ref{fig:growcut} shows the
+  it does not use the GPU and use TBB for threading. Figure~\ref{fig:growcut} shows the
   performance on a multicore machine as well as on a GPU as the input
   size varies.
 We see that having $24$ vs $32$ cores does not make a difference for streaming, since
@@ -159,12 +160,15 @@ more involved due to the data-dependent access pattern.
 Atomic memory operations are typically used to enable potential parallelism for data-dependent stores. 
 Privatization, where individual histograms for portions of the data are computed separately
 and then compiled together into the overall result, may potentially reduce memory contention and then penalty of serialization.
-Also, scan or sort operations on input data can potentially replace atomic memory operations, and achieve the similar functionality.
+Also, scan or sort operations on input data can potentially replace atomic memory operations and achieve the similar functionality.
 
 In this image histogram equalization benchmark, atomic memory operations are specifically applied. 
-Figure \ref{fig:histogram} shows the performance difference among serial CPU, efficient parallel CPU, and efficient parallel GPU versions of image histogram equalization on a 4K video.
+Figure \ref{fig:histogram} shows the performance difference among serial CPU, 
+parallel CPU, and parallel GPU versions of image histogram equalization on a 4K video.
 Our GPU image histogram equalization can achieve up to 260.2 fps on a Tesla C2050, while serial and parallel CPU versions only have 39.1 and 120.5 fps, respectively, on a Intel Xeon E5520 CPU.
 Tiling and thread coarsening are the two major optimization involved in this evaulation.
-In the histogram kernel particularly, tiling (baseline in Figure \ref{fig:histogramCoarsining}) is simply applied for further optimization in order to gain memory efficiency.
-Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied for hiding the overhead of kernels and give a 1.78x speedup over the tiling version.
+In the histogram kernel specifically, tiling (baseline in Figure 
+\ref{fig:histogramCoarsining}) is simply applied for further optimization in
+order to gain memory efficiency.
+Beyond tiling, thread coarsening (simple coarsening in Figure \ref{fig:histogramCoarsining}) can be applied to hide the overhead of kernels and give a 1.78x speedup over the tiling version.
 An aggressive thread coarsening version (aggressive coarsening in Figure \ref{fig:histogramCoarsining}), which involves loop fusion of independent histograms, can further have up to 3.10x over the tiling version.

@@ -33,7 +33,6 @@ We then use a macro to allow us to easily write these mutexes:
 
 
 Throughout our runtime code, we use the above macro to update our state ---
- 	setting the error of the program to \fix{memoryAllocate} is done via \fix{zState\_mutexed(st, Error, zState\_setError(st, memoryAllocate))},
-	for example.
+ 	for example, setting the error of the program to \fix{memoryAllocate} is done via \fix{zState\_mutexed(st, Error, zState\_setError(st, memoryAllocate))}.
 
 \input{mutex}
